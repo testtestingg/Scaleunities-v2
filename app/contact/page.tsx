@@ -1,7 +1,7 @@
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { ArrowUpRight, Mail, MapPin, MessageCircle } from "lucide-react";
-
+ 
 const socialLinks = [
   { 
     name: "Facebook", 
