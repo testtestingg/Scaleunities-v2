@@ -29,8 +29,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "contact.scaleunities@gmail.com",
-    href: "mailto:contact.scaleunities@gmail.com",
+    value: "contact@scaleunities.com",
+    href: "mailto:contact@scaleunities.com",
     description: "For project inquiries and collaborations"
   },
   {
