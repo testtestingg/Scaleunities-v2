@@ -134,7 +134,6 @@ export const translations = {
         },
       ],
     },
-translate to french :
     testimonials: {
       title: "What Our Clients Say",
       subtitle: "Don't just take our word for it—hear from the businesses we've helped grow.",
