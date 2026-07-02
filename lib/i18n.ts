@@ -415,17 +415,17 @@ export const translations = {
         {
           quote:
             "Scaleunities a totalement transformé nos outils internes. Le nouveau tableau de bord est ultra-rapide et intuitif, faisant gagner des heures à notre équipe chaque semaine. Leur souci du détail est inégalé.",
-          role: "Directrice des opérations, TechFlow Systems",
+          role: "Director marketing, Nexus Partners",
         },
         {
           quote:
             "Travailler avec l'équipe Scaleunities a tout changé. Ils ont livré un site web magnifique et réactif qui a nettement renforcé notre présence en ligne et l'engagement de nos clients.",
-          role: "PDG, Digital Growth Agency",
+          role: "CEO & PMU Artist | Co-Founder, Carthage",
         },
         {
           quote:
             "L'équipe de Scaleunities ne construit pas que des sites web — elle construit des moteurs de croissance. Leur approche stratégique et leur expertise technique nous ont permis d'obtenir un ROI de 5x sur notre investissement numérique.",
-          role: "Directrice marketing, Nexus Partners",
+          role: "Managing Director | Founder, Golden bridge Eco",
         },
       ],
     },
