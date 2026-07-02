@@ -117,10 +117,10 @@ export function ContactPageClient() {
                 <div>
                   <h3 className="font-medium text-foreground mb-1">{c.emailLabel}</h3>
                   <a
-                    href="mailto:hello@amirdridi.com"
+                    href="mailto:hello@scaleunities.com"
                     className="text-muted-foreground hover:text-accent transition-colors"
                   >
-                    hello@amirdridi.com
+                    hello@scaleunities.com
                   </a>
                 </div>
               </div>
