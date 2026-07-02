@@ -5,9 +5,9 @@ import { useLanguage } from "@/components/language-provider"
 
 // Names and photos stay constant across languages; quote/role come from translations.
 const people = [
-  { name: "Fatima Khelil", image: "https://randomuser.me/api/portraits/women/68.jpg" },
-  { name: "Ahmed Ben Ali", image: "https://randomuser.me/api/portraits/men/32.jpg" },
-  { name: "Sarah Mitchell", image: "https://randomuser.me/api/portraits/women/44.jpg" },
+  { name: "Fatima Khelil", image: "	https://www.42heilbronn.de/files/images/2025/Team_complete/Robin.png" },
+  { name: "Rahma Ammouri", image: "https://i.ibb.co/gLxCHt43/Screenshot-2026-07-02-at-7-08-19-PM.png" },
+  { name: "Farhang Yarbakht", image: "https://i.ibb.co/ZsDhXGS/Screenshot-2026-07-02-at-7-07-25-PM.png" },
 ]
 
 export function TestimonialsSection() {
