@@ -1,71 +1,56 @@
-import { Navigation } from "@/components/landing/navigation";
-import { HeroSection } from "@/components/landing/hero-section";
-import { FeaturesSection } from "@/components/landing/features-section";
-import { HowItWorksSection } from "@/components/landing/how-it-works-section";
-import { InfrastructureSection } from "@/components/landing/infrastructure-section";
-import { MetricsSection } from "@/components/landing/metrics-section";
-import { IntegrationsSection } from "@/components/landing/integrations-section";
-import { SecuritySection } from "@/components/landing/security-section";
-import { DevelopersSection } from "@/components/landing/developers-section";
-import dynamic from "next/dynamic";
-import { TrustedCompaniesSection } from "@/components/landing/trusted-companies-section";
-import { CtaSection } from "@/components/landing/cta-section";
-import { FooterSection } from "@/components/landing/footer-section";
-import { PageClient } from "./page-client";
-import { TeamSection } from "@/components/landing/team-section";
-import { TrustedBySection } from "@/components/landing/trusted-by-section"; // <-- ADDED
-
-// Dynamically import heavy components for better initial load
-const FeaturedWorkSection = dynamic(() => import("@/components/landing/FeaturedWorkSection").then(mod => ({ default: mod.FeaturedWorkSection })), {
-  loading: () => <div className="h-96 bg-foreground/5 rounded-lg animate-pulse" />,
-  ssr: true
-});
+import { Header } from "@/components/header"
+import { Hero } from "@/components/hero"
+import { PortfolioShowcase } from "@/components/portfolio-showcase"
+import { ClientLogos } from "@/components/client-logos"
+import { StatsSection } from "@/components/stats-section"
+import { ServicesSection } from "@/components/services-section"
+import { TeamSection } from "@/components/team-section"
+import { CaseStudiesSection } from "@/components/case-studies-section"
+import { TestimonialsSection } from "@/components/testimonials-section"
+import { ApproachSection } from "@/components/approach-section"
+import { PricingSection } from "@/components/pricing-section"
+import { FAQSection } from "@/components/faq-section"
+import { CTASection } from "@/components/cta-section"
+import { Footer } from "@/components/footer"
+import { Reveal } from "@/components/reveal"
 
 export default function Home() {
   return (
-    <PageClient>
-      <main className="relative min-h-screen overflow-x-hidden noise-overlay" role="main">
-        <Navigation />
-        <HeroSection />
-        <section>
-          <TeamSection />
-        </section>
-        <section>
-          <FeaturesSection />
-        </section>
-        <section>
-          <HowItWorksSection />
-        </section>
-        <section>
-          <TrustedCompaniesSection />
-        </section>
-        <section>
-          <InfrastructureSection />
-        </section>
-        <section>
-          <MetricsSection />
-        </section>
-        <section>
-          <IntegrationsSection />
-        </section>
-        <section>
-          <SecuritySection />
-        </section>
-        <section>
-          <DevelopersSection />
-        </section>
-        <section>
-          <FeaturedWorkSection />
-        </section>
-        
-        {/* ADDED NEW TRUSTED BY SECTION HERE */}
-        <TrustedBySection />
-
-        <section>
-          <CtaSection />
-        </section>
-        <FooterSection />
-      </main>
-    </PageClient>
-  );
+    <main className="min-h-screen">
+      <Header />
+      <Hero />
+      <PortfolioShowcase />
+      <Reveal>
+        <ClientLogos />
+      </Reveal>
+      <Reveal>
+        <StatsSection />
+      </Reveal>
+      <Reveal>
+        <ServicesSection />
+      </Reveal>
+      <Reveal>
+        <TeamSection />
+      </Reveal>
+      <Reveal>
+        <CaseStudiesSection />
+      </Reveal>
+      <Reveal>
+        <TestimonialsSection />
+      </Reveal>
+      <Reveal>
+        <ApproachSection />
+      </Reveal>
+      <Reveal>
+        <PricingSection />
+      </Reveal>
+      <Reveal>
+        <FAQSection />
+      </Reveal>
+      <Reveal>
+        <CTASection />
+      </Reveal>
+      <Footer />
+    </main>
+  )
 }
