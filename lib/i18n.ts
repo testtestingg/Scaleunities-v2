@@ -408,27 +408,27 @@ export const translations = {
         },
       ],
     },
-    testimonials: {
-      title: "Ce que disent nos clients",
-      subtitle: "Ne nous croyez pas sur parole — écoutez les entreprises que nous avons aidées à grandir.",
-      items: [
-        {
-          quote:
-            "Scaleunities a totalement transformé nos outils internes. Le nouveau tableau de bord est ultra-rapide et intuitif, faisant gagner des heures à notre équipe chaque semaine. Leur souci du détail est inégalé.",
-          role: "Director marketing, Nexus Partners",
-        },
-        {
-          quote:
-            "Travailler avec l'équipe Scaleunities a tout changé. Ils ont livré un site web magnifique et réactif qui a nettement renforcé notre présence en ligne et l'engagement de nos clients.",
-          role: "CEO & PMU Artist | Co-Founder, Carthage",
-        },
-        {
-          quote:
-            "L'équipe de Scaleunities ne construit pas que des sites web — elle construit des moteurs de croissance. Leur approche stratégique et leur expertise technique nous ont permis d'obtenir un ROI de 5x sur notre investissement numérique.",
-          role: "Managing Director | Founder, Golden bridge Eco",
-        },
-      ],
+testimonials: {
+  title: "Ce que disent nos clients",
+  subtitle: "Ne vous fiez pas seulement à notre parole — découvrez les témoignages des entreprises que nous avons aidées à se développer.",
+  items: [
+    {
+      quote:
+        "Scaleunities a complètement transformé nos outils internes. Le nouveau tableau de bord est extrêmement rapide et conçu de manière intuitive, ce qui permet à notre équipe de gagner des heures chaque semaine. Leur souci du détail est inégalé.",
+      role: "Directeur des opérations, Liwan kw",
     },
+    {
+      quote:
+        "Travailler avec l'équipe de Scaleunities a été un véritable tournant pour notre entreprise. Ils ont livré un site web magnifique et responsive qui a considérablement renforcé notre présence en ligne et l'engagement de nos clients.",
+      role: "PDG, Agence de croissance digitale",
+    },
+    {
+      quote:
+        "L'équipe de Scaleunities ne se contente pas de créer des sites web — elle construit de véritables moteurs de croissance. Leur approche stratégique et leur expertise technique nous ont permis d'obtenir un retour sur investissement de 5x sur notre investissement numérique.",
+      role: "Directeur marketing, Nexus Partners",
+    },
+  ],
+},
     approach: {
       title: "Notre processus",
       subtitle: "Un processus éprouvé qui transforme votre vision en expériences numériques performantes.",
