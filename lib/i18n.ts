@@ -134,27 +134,27 @@ export const translations = {
         },
       ],
     },
-testimonials: {
-  title: "What Our Clients Say",
-  subtitle: "Don't just take our word for it—hear from the businesses we've helped grow.",
-  items: [
-    {
-      quote:
-        "Scaleunities completely transformed our internal tools. The new dashboard is blazingly fast and intuitively designed, saving our team hours every week. Their attention to detail is unmatched.",
-      role: "Managing Director, Liwan kw",
+    testimonials: {
+      title: "What Our Clients Say",
+      subtitle: "Don't just take our word for it—hear from the businesses we've helped grow.",
+      items: [
+        {
+          quote:
+            "Scaleunities completely transformed our internal tools. The new dashboard is blazingly fast and intuitively designed, saving our team hours every week. Their attention to detail is unmatched.",
+          role: "Managing Director, Liwan kw",
+        },
+        {
+          quote:
+            "The team at Scaleunities doesn't just build websites—they build growth engines. Their strategic approach and technical expertise helped us achieve a 5x ROI on our digital investment.",
+          role: "PMU Artist",
+        },
+        {
+          quote:
+            "Working with the Scaleunities team has been a game-changer. They delivered a beautiful, responsive website that significantly increased our online presence and customer engagement.",
+          role: "Managing Director, Golden Bridge Eco",
+        },
+      ],
     },
-    {
-      quote:
-        "The team at Scaleunities doesn't just build websites—they build growth engines. Their strategic approach and technical expertise helped us achieve a 5x ROI on our digital investment.",
-      role: "PMU Artist",
-    },
-    {
-      quote:
-        "Working with the Scaleunities team has been a game-changer. They delivered a beautiful, responsive website that significantly increased our online presence and customer engagement.",
-      role: "Managing Director, Golden Bridge Eco",
-    },
-  ],
-},
     approach: {
       title: "Our Process",
       subtitle: "A proven process that turns your vision into high-performing digital experiences.",
@@ -408,27 +408,27 @@ testimonials: {
         },
       ],
     },
-testimonials: {
-  title: "Ce que disent nos clients",
-  subtitle: "Ne vous fiez pas seulement à notre parole — découvrez ce que disent les entreprises que nous avons aidées à se développer.",
-  items: [
-    {
-      quote:
-        "Scaleunities a complètement transformé nos outils internes. Le nouveau tableau de bord est extrêmement rapide et intuitivement conçu, permettant à notre équipe de gagner des heures chaque semaine. Leur souci du détail est inégalé.",
-      role: "Directeur général, Liwan kw",
-    },
+    testimonials: {
+      title: "Ce que disent nos clients",
+      subtitle: "Ne vous fiez pas seulement à notre parole — découvrez ce que disent les entreprises que nous avons aidées à se développer.",
+      items: [
         {
-      quote:
-        "L'équipe de Scaleunities ne se contente pas de créer des sites web — elle crée de véritables moteurs de croissance. Leur approche stratégique et leur expertise technique nous ont permis d'obtenir un retour sur investissement multiplié par cinq sur notre investissement numérique.",
-      role: "Artiste PMU",
+          quote:
+            "Scaleunities a complètement transformé nos outils internes. Le nouveau tableau de bord est extrêmement rapide et intuitivement conçu, permettant à notre équipe de gagner des heures chaque semaine. Leur souci du détail est inégalé.",
+          role: "Directeur général, Liwan kw",
+        },
+        {
+          quote:
+            "L'équipe de Scaleunities ne se contente pas de créer des sites web — elle crée de véritables moteurs de croissance. Leur approche stratégique et leur expertise technique nous ont permis d'obtenir un retour sur investissement multiplié par cinq sur notre investissement numérique.",
+          role: "Artiste PMU",
+        },
+        {
+          quote:
+            "Travailler avec l'équipe de Scaleunities a été un véritable tournant pour notre entreprise. Ils ont livré un site web magnifique et responsive qui a considérablement renforcé notre présence en ligne et l'engagement de nos clients.",
+          role: "Directeur général de Golden Bridge Eco",
+        },
+      ],
     },
-    {
-      quote:
-        "Travailler avec l'équipe de Scaleunities a été un véritable tournant pour notre entreprise. Ils ont livré un site web magnifique et responsive qui a considérablement renforcé notre présence en ligne et l'engagement de nos clients.",
-      role: "Directeur général de Golden Bridge Eco",
-    },
-  ],
-}
     approach: {
       title: "Notre processus",
       subtitle: "Un processus éprouvé qui transforme votre vision en expériences numériques performantes.",
