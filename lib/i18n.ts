@@ -141,7 +141,7 @@ export const translations = {
         {
           quote:
             "Scaleunities completely transformed our internal tools. The new dashboard is blazingly fast and intuitively designed, saving our team hours every week. Their attention to detail is unmatched.",
-          role: "Operations Director, TechFlow Systems",
+          role: "role: "Operations Director, Liwan kw"",
         },
         {
           quote:
