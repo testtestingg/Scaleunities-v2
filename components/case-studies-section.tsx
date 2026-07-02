@@ -3,16 +3,12 @@
 import { motion } from "framer-motion"
 import { useLanguage } from "@/components/language-provider"
 
-const U = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=70`
-
 const caseImages = [
-  U("1551288049-bebda4e38f71"), // analytics dashboard
-  U("1556742049-0cfed4f6a45d"), // e-commerce / shopping
-  U("1552519507-da3b142c6e3d"), // car / auto
-  U("1467232004584-a241de8bcf5d"), // brand / workspace
+  "/video1.mp4",
+  "https://static.vecteezy.com/system/resources/thumbnails/002/459/314/small/shopping-online-store-for-sale-mobile-ecommerce-3d-blue-background-shop-online-on-mobile-app-24-hours-shopping-cart-credit-card-minimal-store-online-device-3d-rendered-free-vector.jpg", 
+  "https://static.vecteezy.com/system/resources/thumbnails/076/303/452/small/premium-download-illustration-of-buy-cap-online-vector.jpg",
+  "https://static.vecteezy.com/system/resources/thumbnails/007/163/082/small/landing-page-illustration-of-a-young-woman-relaxing-in-a-comfortable-chair-with-pink-color-free-vector.jpg",
 ]
-
-const caseFallback = "/placeholder.svg?height=400&width=600"
 
 export function CaseStudiesSection() {
   const { t } = useLanguage()
@@ -43,37 +39,48 @@ export function CaseStudiesSection() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {caseStudies.map((study, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group bg-secondary rounded-2xl overflow-hidden border border-border hover:border-accent/50 transition-all duration-300"
-            >
-              <div className="aspect-[3/2] overflow-hidden">
-                <img
-                  src={study.image}
-                  onError={(e) => {
-                    if (e.currentTarget.dataset.fallback !== "1") {
-                      e.currentTarget.dataset.fallback = "1"
-                      e.currentTarget.src = caseFallback
-                    }
-                  }}
-                  alt={study.project}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-8">
-                <div className="text-sm font-semibold text-accent mb-2">{study.client}</div>
-                <h3 className="font-serif text-2xl font-bold mb-3">{study.project}</h3>
-                <div className="text-3xl font-bold text-accent mb-4">{study.metric}</div>
-                <p className="text-muted-foreground leading-relaxed">{study.description}</p>
-              </div>
-            </motion.div>
-          ))}
+          {caseStudies.map((study, index) => {
+            // Check if the source is a video file
+            const isVideo = study.image?.endsWith(".mp4") || study.image?.endsWith(".webm")
+
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="group bg-secondary rounded-2xl overflow-hidden border border-border hover:border-accent/50 transition-all duration-300"
+              >
+                {/* Changed aspect-[3/2] to aspect-video (16:9) */}
+                <div className="aspect-video overflow-hidden bg-neutral-900/5">
+                  {isVideo ? (
+                    <video
+                      src={study.image}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <img
+                      src={study.image}
+                      alt={study.project}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  )}
+                </div>
+                <div className="p-8">
+                  <div className="text-sm font-semibold text-accent mb-2">{study.client}</div>
+                  <h3 className="font-serif text-2xl font-bold mb-3">{study.project}</h3>
+                  <div className="text-3xl font-bold text-accent mb-4">{study.metric}</div>
+                  <p className="text-muted-foreground leading-relaxed">{study.description}</p>
+                </div>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>
