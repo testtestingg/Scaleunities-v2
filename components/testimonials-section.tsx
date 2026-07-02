@@ -5,7 +5,7 @@ import { useLanguage } from "@/components/language-provider"
 
 // Names and photos stay constant across languages; quote/role come from translations.
 const people = [
-  { name: "Fatima Khelil", image: "	https://www.42heilbronn.de/files/images/2025/Team_complete/Robin.png" },
+  { name: "Robin Zimmermann", image: "	https://www.42heilbronn.de/files/images/2025/Team_complete/Robin.png" },
   { name: "Rahma Ammouri", image: "https://i.ibb.co/gLxCHt43/Screenshot-2026-07-02-at-7-08-19-PM.png" },
   { name: "Farhang Yarbakht", image: "https://i.ibb.co/ZsDhXGS/Screenshot-2026-07-02-at-7-07-25-PM.png" },
 ]
