@@ -134,6 +134,7 @@ export const translations = {
         },
       ],
     },
+translate to french :
     testimonials: {
       title: "What Our Clients Say",
       subtitle: "Don't just take our word for it—hear from the businesses we've helped grow.",
@@ -141,17 +142,17 @@ export const translations = {
         {
           quote:
             "Scaleunities completely transformed our internal tools. The new dashboard is blazingly fast and intuitively designed, saving our team hours every week. Their attention to detail is unmatched.",
-          role: "role: "Operations Director, Liwan kw"",
+          role: "role: "Managing Director, Liwan kw"",
+        },
+                {
+          quote:
+            "The team at Scaleunities doesn't just build websites—they build growth engines. Their strategic approach and technical expertise helped us achieve a 5x ROI on our digital investment.",
+          role: " PMU Artist",
         },
         {
           quote:
             "Working with the Scaleunities team has been a game-changer. They delivered a beautiful, responsive website that significantly increased our online presence and customer engagement.",
-          role: "CEO, Digital Growth Agency",
-        },
-        {
-          quote:
-            "The team at Scaleunities doesn't just build websites—they build growth engines. Their strategic approach and technical expertise helped us achieve a 5x ROI on our digital investment.",
-          role: "Marketing Director, Nexus Partners",
+          role: "Managing Director of Golden bridge eco",
         },
       ],
     },
@@ -410,25 +411,25 @@ export const translations = {
     },
 testimonials: {
   title: "Ce que disent nos clients",
-  subtitle: "Ne vous fiez pas seulement à notre parole — découvrez les témoignages des entreprises que nous avons aidées à se développer.",
+  subtitle: "Ne vous fiez pas seulement à notre parole — découvrez ce que disent les entreprises que nous avons aidées à se développer.",
   items: [
     {
       quote:
-        "Scaleunities a complètement transformé nos outils internes. Le nouveau tableau de bord est extrêmement rapide et conçu de manière intuitive, ce qui permet à notre équipe de gagner des heures chaque semaine. Leur souci du détail est inégalé.",
-      role: "Directeur des opérations, Liwan kw",
+        "Scaleunities a complètement transformé nos outils internes. Le nouveau tableau de bord est extrêmement rapide et intuitivement conçu, permettant à notre équipe de gagner des heures chaque semaine. Leur souci du détail est inégalé.",
+      role: "Directeur général, Liwan kw",
+    },
+        {
+      quote:
+        "L'équipe de Scaleunities ne se contente pas de créer des sites web — elle crée de véritables moteurs de croissance. Leur approche stratégique et leur expertise technique nous ont permis d'obtenir un retour sur investissement multiplié par cinq sur notre investissement numérique.",
+      role: "Artiste PMU",
     },
     {
       quote:
         "Travailler avec l'équipe de Scaleunities a été un véritable tournant pour notre entreprise. Ils ont livré un site web magnifique et responsive qui a considérablement renforcé notre présence en ligne et l'engagement de nos clients.",
-      role: "PDG, Agence de croissance digitale",
-    },
-    {
-      quote:
-        "L'équipe de Scaleunities ne se contente pas de créer des sites web — elle construit de véritables moteurs de croissance. Leur approche stratégique et leur expertise technique nous ont permis d'obtenir un retour sur investissement de 5x sur notre investissement numérique.",
-      role: "Directeur marketing, Nexus Partners",
+      role: "Directeur général de Golden Bridge Eco",
     },
   ],
-},
+}
     approach: {
       title: "Notre processus",
       subtitle: "Un processus éprouvé qui transforme votre vision en expériences numériques performantes.",
