@@ -1,40 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useLanguage } from "@/components/language-provider"
 
 export function ApproachSection() {
-  const steps = [
-    {
-      number: "01",
-      title: "Understand Your Vision",
-      description:
-        "We collaborate with you to understand your goals, target audience, and unique requirements. This discovery phase ensures we build exactly what your business needs.",
-    },
-    {
-      number: "02",
-      title: "Design & Prototyping",
-      description:
-        "Our team creates stunning, user-centric designs that prioritize conversions. We prototype key interactions and gather feedback before moving to development.",
-    },
-    {
-      number: "03",
-      title: "Development & Integration",
-      description:
-        "We build scalable, performant solutions using modern technologies like React, Next.js, and React Native. Every integration is seamless.",
-    },
-    {
-      number: "04",
-      title: "Testing & Quality Assurance",
-      description:
-        "Rigorous testing across devices and browsers ensures flawless performance. We optimize every element for speed, accessibility, and user experience.",
-    },
-    {
-      number: "05",
-      title: "Launch & Ongoing Support",
-      description:
-        "We don't just launch and leave. Our dedicated support ensures your solution continues to evolve and drive results as your business grows.",
-    },
-  ]
+  const { t } = useLanguage()
+  const steps = t.approach.steps.map((step, i) => ({ ...step, number: String(i + 1).padStart(2, "0") }))
 
   return (
     <section id="process" className="py-24 px-6 bg-background">
@@ -48,7 +19,7 @@ export function ApproachSection() {
             transition={{ duration: 0.8 }}
             className="font-serif text-5xl md:text-6xl mb-6 text-balance"
           >
-            Our Process
+            {t.approach.title}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -57,7 +28,7 @@ export function ApproachSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
           >
-            A proven process that transforms your vision into high-performing digital experiences
+            {t.approach.subtitle}
           </motion.p>
         </div>
 

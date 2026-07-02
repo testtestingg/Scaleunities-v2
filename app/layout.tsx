@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import { Instrument_Serif, Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import Script from "next/script"
+import { LanguageProvider } from "@/components/language-provider"
 import "./globals.css"
 
 const instrumentSerif = Instrument_Serif({
@@ -100,23 +101,8 @@ export default function RootLayout({
             alt=""
           />
         </noscript>
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
         <Analytics />
-        <div
-          className="gtranslate_wrapper"
-          style={{ position: "fixed", bottom: "20px", right: "20px", zIndex: 999 }}
-        />
-        <Script id="gtranslate-settings" strategy="beforeInteractive">
-          {`
-            window.gtranslateSettings = {
-              default_language: "en",
-              detect_browser_language: true,
-              wrapper_selector: ".gtranslate_wrapper",
-              flag_style: "3d"
-            }
-          `}
-        </Script>
-        <Script src="//cdn.gtranslate.net/widgets/latest/float.js" strategy="afterInteractive" />
       </body>
     </html>
   )

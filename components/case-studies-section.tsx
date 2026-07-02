@@ -1,42 +1,22 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useLanguage } from "@/components/language-provider"
+
+const U = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=70`
+
+const caseImages = [
+  U("1551288049-bebda4e38f71"), // analytics dashboard
+  U("1556742049-0cfed4f6a45d"), // e-commerce / shopping
+  U("1552519507-da3b142c6e3d"), // car / auto
+  U("1467232004584-a241de8bcf5d"), // brand / workspace
+]
+
+const caseFallback = "/placeholder.svg?height=400&width=600"
 
 export function CaseStudiesSection() {
-  const caseStudies = [
-    {
-      client: "Enterprise Dashboard",
-      project: "Dashboard Redesign",
-      metric: "3x Faster Workflows",
-      description:
-        "Complete redesign of internal tools. The new dashboard is blazingly fast and intuitively designed, saving the team hours every week.",
-      image: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      client: "E-commerce Pro",
-      project: "Online Store Platform",
-      metric: "5x Order Increase",
-      description:
-        "Built a premium e-commerce store with elegant interface and seamless checkout experience driving significant revenue growth.",
-      image: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      client: "Auto Marketplace",
-      project: "AI-Powered Buy/Sell Platform",
-      metric: "200+ Active Listings",
-      description:
-        "Platform for buying and selling vehicles with AI-powered price estimation to help users get fair market value.",
-      image: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      client: "Brand Showcase",
-      project: "Elegant Brand Template",
-      metric: "85% Conversion Uplift",
-      description:
-        "Professional web solution with conversion-focused design patterns that dramatically improved lead generation.",
-      image: "/placeholder.svg?height=400&width=600",
-    },
-  ]
+  const { t } = useLanguage()
+  const caseStudies = t.caseStudies.items.map((item, i) => ({ ...item, image: caseImages[i] }))
 
   return (
     <section className="py-24 px-6 bg-background">
@@ -49,7 +29,7 @@ export function CaseStudiesSection() {
             transition={{ duration: 0.8 }}
             className="font-serif text-4xl md:text-5xl font-bold mb-4"
           >
-            Featured Work
+            {t.caseStudies.title}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -58,7 +38,7 @@ export function CaseStudiesSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
           >
-            Real results from projects we&apos;ve delivered. A selection of our most successful digital solutions.
+            {t.caseStudies.subtitle}
           </motion.p>
         </div>
 
@@ -74,8 +54,15 @@ export function CaseStudiesSection() {
             >
               <div className="aspect-[3/2] overflow-hidden">
                 <img
-                  src={study.image || "/placeholder.svg"}
+                  src={study.image}
+                  onError={(e) => {
+                    if (e.currentTarget.dataset.fallback !== "1") {
+                      e.currentTarget.dataset.fallback = "1"
+                      e.currentTarget.src = caseFallback
+                    }
+                  }}
                   alt={study.project}
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>

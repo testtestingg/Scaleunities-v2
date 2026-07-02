@@ -1,42 +1,19 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useLanguage } from "@/components/language-provider"
 
-interface TeamMember {
-  name: string
-  role: string
-  bio: string
-  image: string
-}
-
-const teamMembers: TeamMember[] = [
-  {
-    name: "Amir Dridi",
-    role: "Fullstack Developer",
-    bio: "Specialized in building scalable web applications with modern technologies. Expert in both frontend and backend development.",
-    image: "https://i.ibb.co/VY2qN385/Whats-App-Image-2026-03-23-at-22-13-42.jpg",
-  },
-  {
-    name: "Ranim Mourad",
-    role: "Frontend Developer & UI Designer",
-    bio: "Creative designer with a passion for building beautiful and intuitive user interfaces. Transforms ideas into stunning visual experiences.",
-    image: "https://i.ibb.co/RTmfhRtG/Whats-App-Image-2026-02-04-at-15-31-08.jpg",
-  },
-  {
-    name: "Ali Ben Said",
-    role: "Project Manager",
-    bio: "Ensures smooth project execution and excellent client communication. Dedicated to delivering projects on time and within scope.",
-    image: "https://i.ibb.co/HmmQ9qc/Whats-App-Image-2025-10-17-at-22-07-14.jpg",
-  },
-  {
-    name: "Houssem Ben Cheikh",
-    role: "Designer",
-    bio: "Crafts innovative designs that captivate users. Specializes in UX/UI design, branding, and visual storytelling.",
-    image: "https://i.ibb.co/bgBXhkXN/1763386283657.png",
-  },
+const teamMeta = [
+  { name: "Amir Dridi", image: "https://i.ibb.co/VY2qN385/Whats-App-Image-2026-03-23-at-22-13-42.jpg" },
+  { name: "Ranim Mourad", image: "https://i.ibb.co/RTmfhRtG/Whats-App-Image-2026-02-04-at-15-31-08.jpg" },
+  { name: "Ali Ben Said", image: "https://i.ibb.co/HmmQ9qc/Whats-App-Image-2025-10-17-at-22-07-14.jpg" },
+  { name: "Houssem Ben Cheikh", image: "https://i.ibb.co/bgBXhkXN/1763386283657.png" },
 ]
 
 export function TeamSection() {
+  const { t } = useLanguage()
+  const teamMembers = teamMeta.map((meta, i) => ({ ...meta, ...t.team.members[i] }))
+
   return (
     <section className="py-24 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
@@ -48,7 +25,7 @@ export function TeamSection() {
             transition={{ duration: 0.8 }}
             className="font-serif text-4xl md:text-5xl font-bold mb-4"
           >
-            Meet Our Team
+            {t.team.title}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -57,7 +34,7 @@ export function TeamSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
           >
-            A dedicated team of creative professionals working together to deliver outstanding digital solutions.
+            {t.team.subtitle}
           </motion.p>
         </div>
 

@@ -1,7 +1,12 @@
+"use client"
+
 import Link from "next/link"
 import { IconBrandLinkedin, IconBrandFacebook, IconBrandInstagram, IconMail, IconMapPin } from "@tabler/icons-react"
+import { useLanguage } from "@/components/language-provider"
 
 export function Footer() {
+  const { t } = useLanguage()
+
   const socialLinks = [
     { name: "Facebook", href: "https://www.facebook.com/scaleunities/", icon: IconBrandFacebook },
     { name: "Instagram", href: "https://www.instagram.com/scaleunities/", icon: IconBrandInstagram },
@@ -26,34 +31,26 @@ export function Footer() {
               />
               <span className="font-serif text-xl font-bold">Scaleunities</span>
             </div>
-            <p className="text-muted-foreground leading-relaxed max-w-md">
-              Talented team of digital professionals crafting exceptional digital solutions for your business. From
-              modern websites to mobile apps, we deliver results.
-            </p>
+            <p className="text-muted-foreground leading-relaxed max-w-md">{t.footer.tagline}</p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold mb-4">Quick Links</h3>
+            <h3 className="font-semibold mb-4">{t.footer.quickLinks}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="#services" className="text-muted-foreground hover:text-accent transition-colors">
-                  Services
+                  {t.nav.services}
                 </Link>
               </li>
               <li>
                 <Link href="#process" className="text-muted-foreground hover:text-accent transition-colors">
-                  Process
-                </Link>
-              </li>
-              <li>
-                <Link href="#pricing" className="text-muted-foreground hover:text-accent transition-colors">
-                  Pricing
+                  {t.nav.process}
                 </Link>
               </li>
               <li>
                 <Link href="#testimonials" className="text-muted-foreground hover:text-accent transition-colors">
-                  Testimonials
+                  {t.nav.testimonials}
                 </Link>
               </li>
             </ul>
@@ -61,7 +58,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-semibold mb-4">Contact</h3>
+            <h3 className="font-semibold mb-4">{t.footer.contact}</h3>
             <ul className="space-y-3">
               <li>
                 <a
@@ -75,7 +72,7 @@ export function Footer() {
               <li>
                 <span className="flex items-center gap-2 text-muted-foreground">
                   <IconMapPin className="w-4 h-4" />
-                  Tunis, Tunisia
+                  {t.footer.location}
                 </span>
               </li>
             </ul>
@@ -85,7 +82,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Scaleunities Team. All rights reserved.
+            &copy; {new Date().getFullYear()} Scaleunities Team. {t.footer.rights}
           </p>
 
           {/* Social Links */}

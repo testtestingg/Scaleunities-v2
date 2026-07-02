@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/3d-button"
 import { IconSparkles, IconArrowRight } from "@tabler/icons-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { useLanguage } from "@/components/language-provider"
 
 export function CTASection() {
+  const { t } = useLanguage()
   return (
     <section className="py-24 px-6 bg-secondary">
       <div className="max-w-5xl mx-auto">
@@ -37,7 +39,7 @@ export function CTASection() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="font-serif text-4xl md:text-5xl font-bold mb-6"
             >
-              Ready to Elevate Your Brand?
+              {t.cta.title}
             </motion.h2>
 
             <motion.p
@@ -47,8 +49,7 @@ export function CTASection() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed"
             >
-              Ready to transform your digital presence? Let&apos;s collaborate and create something exceptional together
-              that drives real results for your business.
+              {t.cta.subtitle}
             </motion.p>
 
             <motion.div
@@ -60,12 +61,12 @@ export function CTASection() {
             >
               <Link href="/contact">
                 <Button size="lg" className="rounded-full" leadingIcon={IconArrowRight}>
-                  Get Started Now
+                  {t.cta.getStarted}
                 </Button>
               </Link>
               <Link href="#services">
                 <Button size="lg" variant="outline" className="rounded-full bg-transparent">
-                  View Our Services
+                  {t.cta.viewServices}
                 </Button>
               </Link>
             </motion.div>
@@ -77,7 +78,7 @@ export function CTASection() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="text-sm text-muted-foreground mt-6"
             >
-              No obligation required. We&apos;ll get back to you within 24 hours.
+              {t.cta.note}
             </motion.p>
           </div>
         </motion.div>

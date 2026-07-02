@@ -1,26 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useLanguage } from "@/components/language-provider"
 
 export function ServicesSection() {
-  const services = [
-    {
-      title: "Modern Websites",
-      description: "Responsive, stunning websites that look great on all devices and deliver real results for your business.",
-    },
-    {
-      title: "Mobile Apps",
-      description: "Custom mobile applications for iOS and Android platforms with seamless user experience.",
-    },
-    {
-      title: "Custom Solutions",
-      description: "Tailored digital solutions including e-commerce, business tools, and platforms built to your needs.",
-    },
-    {
-      title: "Expert Support",
-      description: "Dedicated support and maintenance to keep your digital presence running smoothly 24/7.",
-    },
-  ]
+  const { t } = useLanguage()
+  const services = t.services.items
 
   return (
     <section id="services" className="py-20 px-4 sm:px-6 w-full bg-background">
@@ -34,7 +19,7 @@ export function ServicesSection() {
             transition={{ duration: 0.8 }}
             className="font-serif text-5xl sm:text-6xl lg:text-7xl font-normal text-foreground mb-4 tracking-tight"
           >
-            Our Services
+            {t.services.title}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -43,7 +28,7 @@ export function ServicesSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="font-sans text-lg sm:text-xl text-muted-foreground"
           >
-            Everything your business needs to succeed in the digital world.
+            {t.services.subtitle}
           </motion.p>
         </div>
 
