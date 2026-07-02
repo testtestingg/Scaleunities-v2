@@ -134,27 +134,27 @@ export const translations = {
         },
       ],
     },
-    testimonials: {
-      title: "What Our Clients Say",
-      subtitle: "Don't just take our word for it—hear from the businesses we've helped grow.",
-      items: [
-        {
-          quote:
-            "Scaleunities completely transformed our internal tools. The new dashboard is blazingly fast and intuitively designed, saving our team hours every week. Their attention to detail is unmatched.",
-          role: "role: "Managing Director, Liwan kw"",
-        },
-                {
-          quote:
-            "The team at Scaleunities doesn't just build websites—they build growth engines. Their strategic approach and technical expertise helped us achieve a 5x ROI on our digital investment.",
-          role: " PMU Artist",
-        },
-        {
-          quote:
-            "Working with the Scaleunities team has been a game-changer. They delivered a beautiful, responsive website that significantly increased our online presence and customer engagement.",
-          role: "Managing Director of Golden bridge eco",
-        },
-      ],
+testimonials: {
+  title: "What Our Clients Say",
+  subtitle: "Don't just take our word for it—hear from the businesses we've helped grow.",
+  items: [
+    {
+      quote:
+        "Scaleunities completely transformed our internal tools. The new dashboard is blazingly fast and intuitively designed, saving our team hours every week. Their attention to detail is unmatched.",
+      role: "Managing Director, Liwan kw",
     },
+    {
+      quote:
+        "The team at Scaleunities doesn't just build websites—they build growth engines. Their strategic approach and technical expertise helped us achieve a 5x ROI on our digital investment.",
+      role: "PMU Artist",
+    },
+    {
+      quote:
+        "Working with the Scaleunities team has been a game-changer. They delivered a beautiful, responsive website that significantly increased our online presence and customer engagement.",
+      role: "Managing Director, Golden Bridge Eco",
+    },
+  ],
+},
     approach: {
       title: "Our Process",
       subtitle: "A proven process that turns your vision into high-performing digital experiences.",
