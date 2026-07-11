@@ -39,7 +39,8 @@ export function Header() {
             <img
               src="/scaleunities-logo.png"
               alt="Scaleunities Logo"
-              className="h-8 w-auto"
+              /* Increased height but added negative vertical margin to prevent header stretching */
+              className="h-14 md:h-16 w-auto -my-4 object-contain origin-left"
             />
           </Link>
 
