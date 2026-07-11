@@ -35,13 +35,12 @@ export function Header() {
       <div className="container mx-auto px-6 py-4">
         <div className="relative flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 text-xl font-semibold">
+          <Link href="/" className="flex items-center gap-2">
             <img
-              src="https://i.ibb.co/fVNXP5mS/Techytak-logo.png"
+              src="/scaleunities-logo.png"
               alt="Scaleunities Logo"
               className="h-8 w-auto"
             />
-            <span className="font-serif">Scaleunities</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
