@@ -27,7 +27,8 @@ export function Footer() {
               <img
                 src="/scaleunities-logo.png"
                 alt="Scaleunities Logo"
-                className="h-10 w-auto object-contain"
+                /* Increased height significantly, balanced by negative margin */
+                className="h-20 w-auto object-contain -my-4 origin-left"
               />
             </div>
             <p className="text-muted-foreground leading-relaxed max-w-md">{t.footer.tagline}</p>
