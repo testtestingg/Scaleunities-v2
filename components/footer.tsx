@@ -25,11 +25,10 @@ export function Footer() {
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <img
-                src="https://i.ibb.co/fVNXP5mS/Techytak-logo.png"
+                src="/scaleunities-logo.png"
                 alt="Scaleunities Logo"
                 className="h-10 w-auto object-contain"
               />
-              <span className="font-serif text-xl font-bold">Scaleunities</span>
             </div>
             <p className="text-muted-foreground leading-relaxed max-w-md">{t.footer.tagline}</p>
           </div>
