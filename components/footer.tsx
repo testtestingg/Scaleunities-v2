@@ -62,7 +62,7 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="mailto:hello@scaleunities.com"
+                  href="mailto:contact@scaleunities.com"
                   className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors"
                 >
                   <IconMail className="w-4 h-4" />
