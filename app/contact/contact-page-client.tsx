@@ -216,7 +216,7 @@ export function ContactPageClient() {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          placeholder="+216 XX XXX XXX"
+                          placeholder="+XX XX XXX XXX"
                           className={inputClasses}
                         />
                       </div>
