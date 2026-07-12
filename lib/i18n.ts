@@ -213,7 +213,7 @@ export const translations = {
         {
           question: "Where is your team located?",
           answer:
-            "Our team is based in Tunis, Tunisia. We work with clients globally and are available Monday to Friday, 9:00 AM - 6:00 PM CET. We communicate fluently in English, French, and Arabic.",
+            "Our team is based in Djerba, Tunisia. We work with clients globally and are available Monday to Friday, 9:00 AM - 6:00 PM CET. We communicate fluently in English, French, and Arabic.",
         },
       ],
     },
@@ -230,7 +230,7 @@ export const translations = {
         "A talented team of digital professionals crafting exceptional digital solutions for your business. From modern websites to mobile apps, we deliver results.",
       quickLinks: "Quick Links",
       contact: "Contact",
-      location: "Tunis, Tunisia",
+      location: "Djerba, Tunisia",
       rights: "All rights reserved.",
     },
     contact: {
@@ -487,7 +487,7 @@ export const translations = {
         {
           question: "Où se trouve votre équipe ?",
           answer:
-            "Notre équipe est basée à Tunis, en Tunisie. Nous travaillons avec des clients partout dans le monde et sommes disponibles du lundi au vendredi, de 9h00 à 18h00 (CET). Nous communiquons couramment en anglais, en français et en arabe.",
+            "Notre équipe est basée à Djerba, en Tunisie. Nous travaillons avec des clients partout dans le monde et sommes disponibles du lundi au vendredi, de 9h00 à 18h00 (CET). Nous communiquons couramment en anglais, en français et en arabe.",
         },
       ],
     },
@@ -504,7 +504,7 @@ export const translations = {
         "Une équipe talentueuse de professionnels du numérique qui conçoit des solutions exceptionnelles pour votre entreprise. Des sites web modernes aux applications mobiles, nous livrons des résultats.",
       quickLinks: "Liens rapides",
       contact: "Contact",
-      location: "Tunis, Tunisie",
+      location: "Djerba, Tunisie",
       rights: "Tous droits réservés.",
     },
     contact: {
