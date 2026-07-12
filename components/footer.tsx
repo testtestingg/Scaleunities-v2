@@ -66,7 +66,7 @@ export function Footer() {
                   className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors"
                 >
                   <IconMail className="w-4 h-4" />
-                  hello@scaleunities.com
+                  contact@scaleunities.com
                 </a>
               </li>
               <li>
