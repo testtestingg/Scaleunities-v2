@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
+import { useState } from "react"
 import { useLanguage } from "@/components/language-provider"
 
 // Website / dashboard style image links
@@ -26,7 +26,7 @@ const appShots = [
   "https://i.ibb.co/DgYbZNFG/Screenshot-2026-07-02-at-6-32-37-PM.png",
 ]
 
-function WebsiteCard({ src }: { src: string }) {
+function WebsiteCard({ src, priority = false }: { src: string; priority?: boolean }) {
   const [isLoaded, setIsLoaded] = useState(false)
 
   return (
@@ -47,9 +47,11 @@ function WebsiteCard({ src }: { src: string }) {
         <img
           src={src}
           alt="Website template preview"
+          /* Intentionally omitted loading="lazy" so animations don't break loading */
           decoding="async"
+          fetchPriority={priority ? "high" : "auto"}
           onLoad={() => setIsLoaded(true)}
-          className={`h-full w-full object-cover object-top pt-6 transition-all duration-700 group-hover:scale-105 ${
+          className={`h-full w-full object-cover object-top pt-6 transition-all duration-700 md:group-hover:scale-105 ${
             isLoaded ? "opacity-100" : "opacity-0"
           }`}
         />
@@ -58,7 +60,7 @@ function WebsiteCard({ src }: { src: string }) {
   )
 }
 
-function AppCard({ src }: { src: string }) {
+function AppCard({ src, priority = false }: { src: string; priority?: boolean }) {
   const [isLoaded, setIsLoaded] = useState(false)
 
   return (
@@ -76,98 +78,12 @@ function AppCard({ src }: { src: string }) {
           src={src}
           alt="App template preview"
           decoding="async"
+          fetchPriority={priority ? "high" : "auto"}
           onLoad={() => setIsLoaded(true)}
-          className={`h-full w-full rounded-[1.6rem] object-cover object-center transition-all duration-700 group-hover:scale-105 ${
+          className={`h-full w-full rounded-[1.6rem] object-cover object-center transition-all duration-700 md:group-hover:scale-105 ${
             isLoaded ? "opacity-100" : "opacity-0"
           }`}
         />
-      </div>
-    </div>
-  )
-}
-
-// Custom Smooth JS Marquee
-function SmoothMarquee({ 
-  children, 
-  direction = "left", 
-  speed = 1 
-}: { 
-  children: React.ReactNode, 
-  direction?: "left" | "right", 
-  speed?: number 
-}) {
-  const scrollerRef = useRef<HTMLDivElement>(null)
-  const hoverRef = useRef(false)
-  const isDragging = useRef(false)
-  const currentSpeed = useRef(speed)
-
-  useEffect(() => {
-    const scroller = scrollerRef.current
-    if (!scroller) return
-
-    let animationFrameId: number
-    let lastTimestamp = performance.now()
-
-    // Initialize position so right scroll doesn't snap instantly on load
-    setTimeout(() => {
-      if (direction === "right" && scroller) {
-        scroller.scrollLeft = scroller.scrollWidth / 3
-      }
-    }, 100)
-
-    const step = (timestamp: number) => {
-      const deltaTime = timestamp - lastTimestamp
-      lastTimestamp = timestamp
-
-      // Target speed goes to 0 if hovered or manually dragging
-      const targetSpeed = (hoverRef.current || isDragging.current) ? 0 : speed
-      
-      // Smooth deceleration/acceleration interpolation
-      currentSpeed.current += (targetSpeed - currentSpeed.current) * 0.08
-
-      // Apply scroll loop only if we aren't dragging and speed isn't effectively zero
-      if (Math.abs(currentSpeed.current) > 0.05 && !isDragging.current) {
-        const moveAmount = (currentSpeed.current * deltaTime) / 16
-        const setWidth = scroller.scrollWidth / 3
-
-        if (direction === "left") {
-          scroller.scrollLeft += moveAmount
-          if (scroller.scrollLeft >= setWidth) {
-            scroller.scrollLeft -= setWidth // reset seamlessly
-          }
-        } else {
-          scroller.scrollLeft -= moveAmount
-          if (scroller.scrollLeft <= 0) {
-            scroller.scrollLeft += setWidth // reset seamlessly
-          }
-        }
-      }
-      animationFrameId = requestAnimationFrame(step)
-    }
-
-    animationFrameId = requestAnimationFrame(step)
-
-    return () => cancelAnimationFrame(animationFrameId)
-  }, [direction, speed])
-
-  return (
-    <div
-      ref={scrollerRef}
-      className="flex overflow-x-auto no-scrollbar w-full snap-x snap-mandatory sm:snap-none"
-      onMouseEnter={() => (hoverRef.current = true)}
-      onMouseLeave={() => (hoverRef.current = false)}
-      onTouchStart={() => { hoverRef.current = true; isDragging.current = true; }}
-      onTouchEnd={() => { hoverRef.current = false; isDragging.current = false; }}
-      onPointerDown={() => { isDragging.current = true; }}
-      onPointerUp={() => { isDragging.current = false; }}
-      onPointerLeave={() => { isDragging.current = false; }}
-      style={{ WebkitOverflowScrolling: 'touch' }}
-    >
-      <div className="flex w-max gap-6 px-4 pb-4">
-        {/* We mount the children 3 times to ensure it loops smoothly without gaps */}
-        <div className="flex gap-6">{children}</div>
-        <div className="flex gap-6">{children}</div>
-        <div className="flex gap-6">{children}</div>
       </div>
     </div>
   )
@@ -179,28 +95,30 @@ export function PortfolioShowcase() {
   return (
     <section className="pt-4 pb-20 overflow-hidden" aria-label="Website and app templates showcase">
       
-      {/* Websites row */}
-      <div className="marquee-mask relative">
+      {/* Websites Row */}
+      <div className="marquee-row marquee-mask relative w-full overflow-x-auto md:overflow-hidden snap-x snap-mandatory no-scrollbar pb-6 md:pb-0">
         <p className="container mx-auto mb-4 px-6 text-xs font-semibold uppercase tracking-widest text-[#6B21A8]">
           {t.marquee.websites}
         </p>
-        <SmoothMarquee direction="left" speed={1.2}>
-          {websiteShots.map((src, i) => (
-            <WebsiteCard key={`web-${i}`} src={src} />
+        {/* Mobile: Flex scroll | Desktop: CSS Marquee */}
+        <div className="flex w-max gap-6 px-6 md:animate-marquee-left">
+          {[...websiteShots, ...websiteShots].map((src, i) => (
+            <WebsiteCard key={`web-${i}`} src={src} priority={i < 2} />
           ))}
-        </SmoothMarquee>
+        </div>
       </div>
 
-      {/* App templates row */}
-      <div className="marquee-mask relative mt-10">
+      {/* Apps Row */}
+      <div className="marquee-row marquee-mask relative mt-10 w-full overflow-x-auto md:overflow-hidden snap-x snap-mandatory no-scrollbar pb-6 md:pb-0">
         <p className="container mx-auto mb-4 px-6 text-xs font-semibold uppercase tracking-widest text-[#6B21A8]">
           {t.marquee.apps}
         </p>
-        <SmoothMarquee direction="right" speed={1.2}>
-          {appShots.map((src, i) => (
-            <AppCard key={`app-${i}`} src={src} />
+        {/* Mobile: Flex scroll | Desktop: CSS Marquee */}
+        <div className="flex w-max gap-6 px-6 md:animate-marquee-right">
+          {[...appShots, ...appShots, ...appShots].map((src, i) => (
+            <AppCard key={`app-${i}`} src={src} priority={i < 3} />
           ))}
-        </SmoothMarquee>
+        </div>
       </div>
 
     </section>
