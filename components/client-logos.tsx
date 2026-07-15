@@ -6,7 +6,7 @@ export function ClientLogos() {
   const { t } = useLanguage()
 
   const logos = [
-    { name: "MBS", src: "/MBS-WHITE-02.png" }, // Added new logo here
+    { name: "MBS", src: "/MBS-WHITE-02.png" },
     { name: "Partner 1", src: "/whatsapp1.png" },
     { name: "Partner 2", src: "/whatsapp2.png" },
     { name: "Partner 3", src: "/whatsapp3.png" },
@@ -17,26 +17,24 @@ export function ClientLogos() {
   ]
 
   return (
-    <section id="partners" className="py-16 px-6 border-t border-border bg-background/50">
-      <div className="container mx-auto max-w-6xl">
-        <h2 className="font-serif text-2xl md:text-3xl text-center mb-12 text-foreground/80 tracking-wide">
+    <section id="partners" className="py-16 px-6 border-t border-border">
+      <div className="container mx-auto max-w-7xl">
+        <h2 className="font-serif text-2xl md:text-3xl text-center mb-16 text-foreground/70">
           {t.trustedBy}
         </h2>
         
-        {/* Adjusted spacing and alignment */}
-        <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16 lg:gap-20">
+        {/* Adjusted spacing to accommodate bigger logos without wrapping awkwardly */}
+        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-16 md:gap-x-20 lg:gap-x-24">
           {logos.map((logo) => (
-            <div 
-              key={logo.name} 
-              className="group flex items-center justify-center w-28 h-16 md:w-36 md:h-20 transition-transform duration-300 hover:scale-105"
-            >
-              <img 
-                src={logo.src || "/placeholder.svg"} 
-                alt={logo.name} 
-                // Removed the global grayscale/heavy fade, moved to a clean per-item hover effect
-                className="max-h-full max-w-full object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-sm" 
-              />
-            </div>
+            <img 
+              key={logo.name}
+              src={logo.src || "/placeholder.svg"} 
+              alt={logo.name} 
+              // Removed the div frame. 
+              // Increased height (h-16 to h-28). 
+              // Added a smooth scale + translate-y (levitate) + opacity effect.
+              className="h-16 md:h-24 lg:h-28 w-auto object-contain opacity-50 cursor-pointer transition-all duration-500 ease-out hover:opacity-100 hover:scale-110 hover:-translate-y-2 drop-shadow-sm hover:drop-shadow-md" 
+            />
           ))}
         </div>
       </div>
