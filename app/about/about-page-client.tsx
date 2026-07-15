@@ -11,7 +11,7 @@ import {
   IconEye,
   IconStar,
   IconBulb,
-  IconHandshake,
+  IconHeartHandshake,
   IconUsers,
   IconCheck,
   IconRocket,
@@ -21,7 +21,7 @@ export function AboutPageClient() {
   const { t } = useLanguage()
   const about = t.about
 
-  const valueIcons = [IconStar, IconBulb, IconHandshake, IconUsers]
+  const valueIcons = [IconStar, IconBulb, IconHeartHandshake, IconUsers]
 
   return (
     <main className="min-h-screen bg-background">
