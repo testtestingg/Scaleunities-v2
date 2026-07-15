@@ -1,38 +1,21 @@
 import Link from "next/link"
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "Page Not Found | Scaleunities",
-  robots: "noindex, follow",
-}
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-background px-6 text-center">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_30%,rgba(107,33,168,0.12),transparent_60%)]" />
-
-      <p className="font-serif text-8xl md:text-9xl font-normal text-[#6B21A8]">404</p>
-
-      <h1 className="mt-4 font-serif text-3xl md:text-4xl text-foreground">
-        This page took a detour.
-      </h1>
-
-      <p className="mt-4 max-w-md text-muted-foreground leading-relaxed">
-        The page you&apos;re looking for doesn&apos;t exist or has moved. Let&apos;s get you back on track.
-      </p>
-
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+    <main className="min-h-screen flex items-center justify-center px-6 bg-background">
+      <div className="text-center max-w-lg">
+        <div className="w-24 h-24 rounded-full bg-[rgba(107,33,168,0.1)] flex items-center justify-center mx-auto mb-8">
+          <span className="font-serif text-4xl text-[#6B21A8]">404</span>
+        </div>
+        <h1 className="font-serif text-4xl md:text-5xl tracking-tight mb-4">Page Not Found</h1>
+        <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+          The page you are looking for doesn't exist or has been moved.
+        </p>
         <Link
           href="/"
-          className="rounded-full bg-[#6B21A8] px-8 py-3 text-base font-semibold text-white shadow-md transition-colors hover:bg-[#581c87]"
+          className="inline-flex items-center justify-center rounded-full bg-[#6B21A8] text-white px-8 py-3 font-medium hover:bg-[#6B21A8]/90 transition-colors"
         >
-          Back to home
-        </Link>
-        <Link
-          href="/contact"
-          className="rounded-full border border-border bg-transparent px-8 py-3 text-base font-semibold text-foreground transition-colors hover:bg-neutral-100"
-        >
-          Contact us
+          Back to Home
         </Link>
       </div>
     </main>

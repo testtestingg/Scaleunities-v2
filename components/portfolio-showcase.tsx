@@ -4,9 +4,6 @@ import { useLanguage } from "@/components/language-provider"
 
 // Website / dashboard style image links
 const websiteShots = [
-  "https://static.vecteezy.com/system/resources/thumbnails/001/183/471/small_2x/online-shopping-website-templates-for-food-delivery.jpg",
-  "https://static.vecteezy.com/system/resources/thumbnails/004/725/571/small_2x/team-developer-work-for-website-development-for-website-template-or-landing-homepage-free-vector.jpg",
-  "https://static.vecteezy.com/system/resources/thumbnails/001/183/473/small_2x/online-shopping-website-template-with-laptop.jpg",
   "https://i.ibb.co/N2dSjjJ2/Screenshot202026-02-0420201202-kf-DAre90tlz-I1-E54xszim-ZFPcm-J4k-G-1.avif",
   "https://i.ibb.co/RTByDdRx/Capture20d-E28099e-CC81cran202025-12-2720a-CC802018.avif",
   "https://i.ibb.co/BMXmbVy/ezgif-233ce88138c14d32-OW7-FSn-Hs-Lm-VYKw-W7d-EJxk2-O1p-F8-J08.webp",
@@ -31,7 +28,7 @@ const appShots = [
 function WebsiteCard({ src }: { src: string }) {
   return (
     <div className="flex-shrink-0 w-[380px] md:w-[560px]">
-      <div className="relative aspect-[16/10] overflow-hidden rounded-xl shadow-lg ring-1 ring-black/5">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-xl shadow-lg ring-1 ring-black/5 group">
         <div className="absolute top-0 left-0 right-0 z-10 flex h-6 items-center gap-1.5 bg-neutral-100/90 px-3 backdrop-blur">
           <span className="h-2 w-2 rounded-full bg-red-400" />
           <span className="h-2 w-2 rounded-full bg-yellow-400" />
@@ -41,7 +38,7 @@ function WebsiteCard({ src }: { src: string }) {
           src={src}
           alt="Website template preview"
           loading="lazy"
-          className="h-full w-full object-cover object-top pt-6"
+          className="h-full w-full object-cover object-top pt-6 transition-transform duration-700 group-hover:scale-105"
         />
       </div>
     </div>
@@ -51,13 +48,13 @@ function WebsiteCard({ src }: { src: string }) {
 function AppCard({ src }: { src: string }) {
   return (
     <div className="flex-shrink-0 w-[180px] md:w-[220px]">
-      <div className="relative aspect-[9/19] overflow-hidden rounded-[2rem] border-[6px] border-neutral-900 bg-neutral-900 shadow-xl">
+      <div className="relative aspect-[9/19] overflow-hidden rounded-[2rem] border-[6px] border-neutral-900 bg-neutral-900 shadow-xl group">
         <div className="absolute left-1/2 top-1 z-10 h-4 w-16 -translate-x-1/2 rounded-full bg-neutral-900" />
         <img
           src={src}
           alt="App template preview"
           loading="lazy"
-          className="h-full w-full rounded-[1.6rem] object-cover object-center"
+          className="h-full w-full rounded-[1.6rem] object-cover object-center transition-transform duration-700 group-hover:scale-105"
         />
       </div>
     </div>
@@ -69,7 +66,7 @@ export function PortfolioShowcase() {
 
   return (
     <section className="pt-4 pb-20 overflow-hidden" aria-label="Website and app templates showcase">
-      {/* Websites row */}
+      {/* Websites row - smooth deceleration on hover via CSS */}
       <div className="marquee-row marquee-mask relative">
         <p className="container mx-auto mb-4 px-6 text-xs font-semibold uppercase tracking-widest text-[#6B21A8]">
           {t.marquee.websites}
@@ -81,7 +78,7 @@ export function PortfolioShowcase() {
         </div>
       </div>
 
-      {/* App templates row */}
+      {/* App templates row - smooth deceleration on hover via CSS */}
       <div className="marquee-row marquee-mask relative mt-10">
         <p className="container mx-auto mb-4 px-6 text-xs font-semibold uppercase tracking-widest text-[#6B21A8]">
           {t.marquee.apps}
