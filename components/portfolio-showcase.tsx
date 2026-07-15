@@ -26,7 +26,7 @@ const appShots = [
   "https://i.ibb.co/DgYbZNFG/Screenshot-2026-07-02-at-6-32-37-PM.png",
 ]
 
-function WebsiteCard({ src, priority = false }: { src: string; priority?: boolean }) {
+function WebsiteCard({ src }: { src: string }) {
   const [isLoaded, setIsLoaded] = useState(false)
 
   return (
@@ -47,9 +47,7 @@ function WebsiteCard({ src, priority = false }: { src: string; priority?: boolea
         <img
           src={src}
           alt="Website template preview"
-          loading={priority ? "eager" : "lazy"}
           decoding="async"
-          fetchPriority={priority ? "high" : "auto"}
           onLoad={() => setIsLoaded(true)}
           className={`h-full w-full object-cover object-top pt-6 transition-all duration-700 group-hover:scale-105 ${
             isLoaded ? "opacity-100" : "opacity-0"
@@ -60,7 +58,7 @@ function WebsiteCard({ src, priority = false }: { src: string; priority?: boolea
   )
 }
 
-function AppCard({ src, priority = false }: { src: string; priority?: boolean }) {
+function AppCard({ src }: { src: string }) {
   const [isLoaded, setIsLoaded] = useState(false)
 
   return (
@@ -77,9 +75,7 @@ function AppCard({ src, priority = false }: { src: string; priority?: boolean })
         <img
           src={src}
           alt="App template preview"
-          loading={priority ? "eager" : "lazy"}
           decoding="async"
-          fetchPriority={priority ? "high" : "auto"}
           onLoad={() => setIsLoaded(true)}
           className={`h-full w-full rounded-[1.6rem] object-cover object-center transition-all duration-700 group-hover:scale-105 ${
             isLoaded ? "opacity-100" : "opacity-0"
@@ -90,15 +86,13 @@ function AppCard({ src, priority = false }: { src: string; priority?: boolean })
   )
 }
 
-// Updated Custom Smooth JS Marquee to handle smart eager/lazy loading
-function SmoothMarquee<T>({ 
-  items,
-  renderItem,
+// Custom Smooth JS Marquee
+function SmoothMarquee({ 
+  children, 
   direction = "left", 
   speed = 1 
 }: { 
-  items: T[],
-  renderItem: (item: T, isPriority: boolean, index: number) => React.ReactNode,
+  children: React.ReactNode, 
   direction?: "left" | "right", 
   speed?: number 
 }) {
@@ -131,6 +125,7 @@ function SmoothMarquee<T>({
       // Smooth deceleration/acceleration interpolation
       currentSpeed.current += (targetSpeed - currentSpeed.current) * 0.08
 
+      // Apply scroll loop only if we aren't dragging and speed isn't effectively zero
       if (Math.abs(currentSpeed.current) > 0.05 && !isDragging.current) {
         const moveAmount = (currentSpeed.current * deltaTime) / 16
         const setWidth = scroller.scrollWidth / 3
@@ -138,12 +133,12 @@ function SmoothMarquee<T>({
         if (direction === "left") {
           scroller.scrollLeft += moveAmount
           if (scroller.scrollLeft >= setWidth) {
-            scroller.scrollLeft -= setWidth
+            scroller.scrollLeft -= setWidth // reset seamlessly
           }
         } else {
           scroller.scrollLeft -= moveAmount
           if (scroller.scrollLeft <= 0) {
-            scroller.scrollLeft += setWidth
+            scroller.scrollLeft += setWidth // reset seamlessly
           }
         }
       }
@@ -151,18 +146,9 @@ function SmoothMarquee<T>({
     }
 
     animationFrameId = requestAnimationFrame(step)
+
     return () => cancelAnimationFrame(animationFrameId)
   }, [direction, speed])
-
-  // Renders a set of items. Only the very first batch ever gets priority loading.
-  const renderSet = (setIndex: number) => (
-    <div className="flex gap-6" key={`set-${setIndex}`}>
-      {items.map((item, i) => 
-        // Only prioritize the first 2 items of the VERY FIRST set
-        renderItem(item, setIndex === 0 && i < 2, i)
-      )}
-    </div>
-  )
 
   return (
     <div
@@ -178,9 +164,10 @@ function SmoothMarquee<T>({
       style={{ WebkitOverflowScrolling: 'touch' }}
     >
       <div className="flex w-max gap-6 px-4 pb-4">
-        {renderSet(0)}
-        {renderSet(1)}
-        {renderSet(2)}
+        {/* We mount the children 3 times to ensure it loops smoothly without gaps */}
+        <div className="flex gap-6">{children}</div>
+        <div className="flex gap-6">{children}</div>
+        <div className="flex gap-6">{children}</div>
       </div>
     </div>
   )
@@ -197,14 +184,11 @@ export function PortfolioShowcase() {
         <p className="container mx-auto mb-4 px-6 text-xs font-semibold uppercase tracking-widest text-[#6B21A8]">
           {t.marquee.websites}
         </p>
-        <SmoothMarquee 
-          items={websiteShots}
-          direction="left" 
-          speed={1.2}
-          renderItem={(src, isPriority, index) => (
-            <WebsiteCard key={`web-${index}`} src={src} priority={isPriority} />
-          )}
-        />
+        <SmoothMarquee direction="left" speed={1.2}>
+          {websiteShots.map((src, i) => (
+            <WebsiteCard key={`web-${i}`} src={src} />
+          ))}
+        </SmoothMarquee>
       </div>
 
       {/* App templates row */}
@@ -212,14 +196,11 @@ export function PortfolioShowcase() {
         <p className="container mx-auto mb-4 px-6 text-xs font-semibold uppercase tracking-widest text-[#6B21A8]">
           {t.marquee.apps}
         </p>
-        <SmoothMarquee 
-          items={appShots}
-          direction="right" 
-          speed={1.2}
-          renderItem={(src, isPriority, index) => (
-            <AppCard key={`app-${index}`} src={src} priority={isPriority} />
-          )}
-        />
+        <SmoothMarquee direction="right" speed={1.2}>
+          {appShots.map((src, i) => (
+            <AppCard key={`app-${i}`} src={src} />
+          ))}
+        </SmoothMarquee>
       </div>
 
     </section>
