@@ -126,65 +126,6 @@
   }
 }
 
-/* Updated animation for truly seamless infinite scroll */
-@keyframes scroll-seamless {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    /* Move exactly the width of one set (5 images * 600px + 4 gaps * 24px = 3096px) */
-    transform: translateX(calc(-3096px));
-  }
-}
-
-/* Slowed down ticker from 25s to 35s */
-.animate-scroll-seamless {
-  animation: scroll-seamless 35s linear infinite;
-}
-
-.animate-scroll-seamless:hover {
-  animation-play-state: paused;
-}
-
-/* Robust marquee: track holds two identical sets; shifting -50% loops seamlessly
-   regardless of how many images each row contains. */
-@keyframes marquee-left {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes marquee-right {
-  from {
-    transform: translateX(-50%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-.animate-marquee-left {
-  animation: marquee-left 45s linear infinite;
-  /* Smooth deceleration on hover instead of abrupt stop */
-  transition: animation-duration 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.animate-marquee-right {
-  animation: marquee-right 45s linear infinite;
-  transition: animation-duration 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-/* Smooth deceleration: slow to 500s duration (near-stop) instead of pausing abruptly */
-.marquee-row:hover .animate-marquee-left {
-  animation-duration: 500s;
-}
-.marquee-row:hover .animate-marquee-right {
-  animation-duration: 500s;
-}
-
 /* Fade the marquee edges into the background */
 .marquee-mask {
   -webkit-mask-image: linear-gradient(
@@ -201,6 +142,15 @@
     #000 92%,
     transparent
   );
+}
+
+/* Hide scrollbar utility for the Javascript scroller */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 /* Blinking caret for the typing animation */
@@ -221,9 +171,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee-left,
-  .animate-marquee-right,
-  .animate-scroll-seamless,
   .typing-caret {
     animation: none !important;
   }
