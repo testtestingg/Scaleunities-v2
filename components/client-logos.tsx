@@ -23,17 +23,13 @@ export function ClientLogos() {
           {t.trustedBy}
         </h2>
         
-        {/* Adjusted spacing to accommodate bigger logos without wrapping awkwardly */}
         <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-16 md:gap-x-20 lg:gap-x-24">
           {logos.map((logo) => (
             <img 
               key={logo.name}
               src={logo.src || "/placeholder.svg"} 
               alt={logo.name} 
-              // Removed the div frame. 
-              // Increased height (h-16 to h-28). 
-              // Added a smooth scale + translate-y (levitate) + opacity effect.
-              className="h-16 md:h-24 lg:h-28 w-auto object-contain opacity-50 cursor-pointer transition-all duration-500 ease-out hover:opacity-100 hover:scale-110 hover:-translate-y-2 drop-shadow-sm hover:drop-shadow-md" 
+              className="h-16 md:h-24 lg:h-28 w-auto object-contain opacity-50 cursor-pointer transition-all duration-500 ease-out hover:opacity-100 hover:scale-110 hover:-translate-y-2" 
             />
           ))}
         </div>
