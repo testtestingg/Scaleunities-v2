@@ -6,7 +6,7 @@ The portal lives at:
 
 It is intentionally absent from the public header, footer, sitemap, and all public
 links. The route is also blocked in `robots.txt` and sends `noindex`, `nofollow`,
-and `noarchive` headers.
+and `noarchive` headers. 
 
 ## 1. Environment variables
 
