@@ -23,8 +23,11 @@ Open the Supabase SQL editor and run the migration files in order:
 
 `supabase/migrations/202607240002_manager_business_permissions.sql`
 
+`supabase/migrations/202607240003_business_intake.sql`
+
 These create the task-number sequence, profiles, businesses, tasks, comments,
-activity history, triggers, permissions, and Row Level Security policies.
+activity history, field-intake form, private media bucket, triggers, permissions,
+and Row Level Security policies.
 
 ## 3. Create approved accounts
 
