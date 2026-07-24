@@ -20,7 +20,6 @@ import {
   LogOut,
   Menu,
   MessageSquare,
-  MoreHorizontal,
   Plus,
   Search,
   Settings2,
@@ -35,6 +34,7 @@ import {
   archiveTask,
   createBusiness,
   createTask,
+  deleteBusiness,
   deleteTask,
   signOut,
   updateProfileRole,
@@ -414,9 +414,13 @@ export function TaskWorkspace({
               businesses={data.businesses}
               tasks={data.tasks}
               canCreate={data.profile.role === "admin"}
+              canDelete={isManager}
               pending={pending}
               onCreate={(name, color) =>
                 runAction(() => createBusiness(portal, name, color))
+              }
+              onDelete={(businessId) =>
+                runAction(() => deleteBusiness(portal, businessId))
               }
             />
           )}
@@ -839,14 +843,18 @@ function BusinessesView({
   businesses,
   tasks,
   canCreate,
+  canDelete,
   pending,
   onCreate,
+  onDelete,
 }: {
   businesses: Business[]
   tasks: Task[]
   canCreate: boolean
+  canDelete: boolean
   pending: boolean
   onCreate: (name: string, color: string) => void
+  onDelete: (businessId: string) => void
 }) {
   const [showForm, setShowForm] = useState(false)
   return (
@@ -868,7 +876,23 @@ function BusinessesView({
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl text-white" style={{ backgroundColor: business.color }}>
                   <BriefcaseBusiness className="h-5 w-5" />
                 </span>
-                <MoreHorizontal className="h-5 w-5 text-[#9b929f]" />
+                {canDelete && (
+                  <button
+                    type="button"
+                    disabled={pending}
+                    onClick={() => {
+                      const confirmed = window.confirm(
+                        `Remove ${business.name} from active businesses? Existing task history will be kept.`,
+                      )
+                      if (confirmed) onDelete(business.id)
+                    }}
+                    className="rounded-lg p-2 text-[#9b929f] transition hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
+                    aria-label={`Remove ${business.name}`}
+                    title="Remove business"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                )}
               </div>
               <h2 className="mt-5 font-serif text-2xl">{business.name}</h2>
               <div className="mt-6 grid grid-cols-2 border-t border-[#eee9f1] pt-4">
