@@ -13,8 +13,10 @@ import {
   CheckCircle2,
   ChevronRight,
   CircleDot,
+  ClipboardPenLine,
   ClipboardList,
   Clock3,
+  Download,
   Filter,
   LayoutDashboard,
   LogOut,
@@ -51,6 +53,11 @@ import type {
   TaskStatus,
   UserRole,
 } from "@/lib/task-types"
+import {
+  BusinessIntakeForm,
+  IntakeBuilder,
+  IntakeSubmissions,
+} from "@/components/tasks/business-intake"
 
 const statusLabels: Record<TaskStatus, string> = {
   to_do: "To Do",
@@ -157,6 +164,7 @@ export function TaskWorkspace({
     { id: "my-tasks", label: "My Tasks", icon: ClipboardList, show: true },
     { id: "all-tasks", label: "All Tasks", icon: CircleDot, show: isManager },
     { id: "businesses", label: "Businesses", icon: BriefcaseBusiness, show: true },
+    { id: "intake", label: "Field Intake", icon: ClipboardPenLine, show: data.profile.role === "admin" },
     { id: "team", label: "Team Members", icon: Users, show: data.profile.role === "admin" },
   ].filter((item) => item.show)
 
@@ -209,6 +217,9 @@ export function TaskWorkspace({
     "my-tasks": ["My Tasks", "Everything currently assigned to you."],
     "all-tasks": ["All Tasks", "Monitor and coordinate work across the whole team."],
     businesses: ["Businesses", "The clients and internal projects connected to team work."],
+    intake: ["Business Field Intake", "A guided form for on-site business discovery."],
+    "intake-builder": ["Customize Intake Form", "Add, edit, or remove questions for Hala’s field visits."],
+    "intake-submissions": ["Intake Responses", "Review collected business information and export it to Google Sheets."],
     team: ["Team Members", "Manage access and responsibilities for approved accounts."],
   }
 
@@ -331,7 +342,7 @@ export function TaskWorkspace({
               </p>
             </div>
           </div>
-          {data.profile.role === "admin" && (
+          {data.profile.role === "admin" && !section.startsWith("intake") && (
             <button
               onClick={() => setEditorTask("new")}
               className="flex h-10 items-center gap-2 rounded-xl bg-[#6B21A8] px-4 text-sm font-bold text-white transition hover:bg-[#571a89]"
@@ -411,6 +422,7 @@ export function TaskWorkspace({
           )}
           {section === "businesses" && (
             <BusinessesView
+              portal={portal}
               businesses={data.businesses}
               tasks={data.tasks}
               canCreate={data.profile.role === "admin"}
@@ -422,6 +434,20 @@ export function TaskWorkspace({
               onDelete={(businessId) =>
                 runAction(() => deleteBusiness(portal, businessId))
               }
+            />
+          )}
+          {section === "intake" && (
+            <BusinessIntakeForm portal={portal} fields={data.intakeFields} />
+          )}
+          {section === "intake-builder" && (
+            <IntakeBuilder portal={portal} fields={data.intakeFields} />
+          )}
+          {section === "intake-submissions" && (
+            <IntakeSubmissions
+              fields={data.intakeFields}
+              submissions={data.intakeSubmissions}
+              answers={data.intakeAnswers}
+              files={data.intakeFiles}
             />
           )}
           {section === "team" && (
@@ -840,6 +866,7 @@ function FilterSelect({
 }
 
 function BusinessesView({
+  portal,
   businesses,
   tasks,
   canCreate,
@@ -848,6 +875,7 @@ function BusinessesView({
   onCreate,
   onDelete,
 }: {
+  portal: string
   businesses: Business[]
   tasks: Task[]
   canCreate: boolean
@@ -859,7 +887,20 @@ function BusinessesView({
   const [showForm, setShowForm] = useState(false)
   return (
     <div>
-      <div className="mb-5 flex justify-end">
+      <div className="mb-5 flex flex-wrap justify-end gap-2">
+        {canCreate && (
+          <>
+            <Link href={`/task/${portal}/dashboard/intake-submissions`} className="inline-flex items-center gap-2 rounded-xl border border-[#d9cfde] bg-white px-4 py-2.5 text-sm font-bold text-[#655a6b]">
+              <Download className="h-4 w-4" /> Responses
+            </Link>
+            <Link href={`/task/${portal}/dashboard/intake-builder`} className="inline-flex items-center gap-2 rounded-xl border border-[#d9cfde] bg-white px-4 py-2.5 text-sm font-bold text-[#655a6b]">
+              <Settings2 className="h-4 w-4" /> Edit form
+            </Link>
+            <Link href={`/task/${portal}/dashboard/intake`} className="inline-flex items-center gap-2 rounded-xl bg-[#24162d] px-4 py-2.5 text-sm font-bold text-white">
+              <ClipboardPenLine className="h-4 w-4" /> Start field intake
+            </Link>
+          </>
+        )}
         {canCreate && (
           <button onClick={() => setShowForm(true)} className="flex items-center gap-2 rounded-xl bg-[#6B21A8] px-4 py-2.5 text-sm font-bold text-white">
             <Plus className="h-4 w-4" /> Add business

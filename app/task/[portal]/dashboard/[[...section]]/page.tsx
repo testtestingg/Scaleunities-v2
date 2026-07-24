@@ -6,6 +6,10 @@ import type {
   Business,
   Comment,
   DashboardData,
+  IntakeAnswer,
+  IntakeField,
+  IntakeFile,
+  IntakeSubmission,
   Profile,
   Task,
 } from "@/lib/task-types"
@@ -13,7 +17,17 @@ import { TaskWorkspace } from "@/components/tasks/task-workspace"
 
 export const dynamic = "force-dynamic"
 
-const validSections = new Set(["overview", "my-tasks", "all-tasks", "businesses", "team"])
+const validSections = new Set([
+  "overview",
+  "my-tasks",
+  "all-tasks",
+  "businesses",
+  "team",
+  "intake",
+  "intake-builder",
+  "intake-submissions",
+])
+const intakeSections = new Set(["intake", "intake-builder", "intake-submissions"])
 
 export default async function DashboardPage({
   params,
@@ -43,7 +57,8 @@ export default async function DashboardPage({
 
   if (
     (currentSection === "all-tasks" && profile.role === "member") ||
-    (currentSection === "team" && profile.role !== "admin")
+    (currentSection === "team" && profile.role !== "admin") ||
+    (intakeSections.has(currentSection) && profile.role !== "admin")
   ) {
     redirect(`/task/${portal}/dashboard/my-tasks`)
   }
@@ -104,6 +119,64 @@ export default async function DashboardPage({
     )
   }
 
+  let intakeFields: IntakeField[] = []
+  let intakeSubmissions: IntakeSubmission[] = []
+  let intakeAnswers: IntakeAnswer[] = []
+  let intakeFiles: IntakeFile[] = []
+
+  if (intakeSections.has(currentSection)) {
+    const [fieldsResult, submissionsResult, answersResult, filesResult] =
+      await Promise.all([
+        supabase
+          .from("intake_form_fields")
+          .select(
+            "id, section_number, section_title, field_order, field_key, label, placeholder, field_type, options, required, is_active, config",
+          )
+          .order("section_number")
+          .order("field_order"),
+        supabase
+          .from("intake_submissions")
+          .select(
+            "id, display_name, status, created_at, updated_at, submitted_at, creator:profiles!intake_submissions_created_by_fkey(id,full_name)",
+          )
+          .order("created_at", { ascending: false }),
+        supabase
+          .from("intake_answers")
+          .select("id, submission_id, field_id, value"),
+        supabase
+          .from("intake_files")
+          .select(
+            "id, submission_id, field_id, storage_path, file_name, mime_type, file_size, created_at",
+          )
+          .order("created_at"),
+      ])
+
+    const intakeError =
+      fieldsResult.error ||
+      submissionsResult.error ||
+      answersResult.error ||
+      filesResult.error
+    if (intakeError) {
+      return (
+        <main className="flex min-h-screen items-center justify-center bg-[#f7f5fa] p-6">
+          <div className="max-w-lg rounded-3xl border border-amber-200 bg-white p-8 text-center">
+            <AlertTriangle className="mx-auto h-9 w-9 text-amber-600" />
+            <h1 className="mt-4 font-serif text-3xl text-[#241b2b]">
+              Field intake setup required
+            </h1>
+            <p className="mt-3 text-sm leading-6 text-[#746a7a]">
+              Run the business-intake Supabase migration, then refresh this page.
+            </p>
+          </div>
+        </main>
+      )
+    }
+    intakeFields = (fieldsResult.data || []) as IntakeField[]
+    intakeSubmissions = (submissionsResult.data || []) as unknown as IntakeSubmission[]
+    intakeAnswers = (answersResult.data || []) as IntakeAnswer[]
+    intakeFiles = (filesResult.data || []) as IntakeFile[]
+  }
+
   const data: DashboardData = {
     profile: profile as Profile,
     profiles: (profilesResult.data || []) as Profile[],
@@ -111,6 +184,10 @@ export default async function DashboardPage({
     tasks: (tasksResult.data || []) as unknown as Task[],
     comments: (commentsResult.data || []) as unknown as Comment[],
     activities: (activityResult.data || []) as unknown as Activity[],
+    intakeFields,
+    intakeSubmissions,
+    intakeAnswers,
+    intakeFiles,
   }
 
   return <TaskWorkspace portal={portal} section={currentSection} data={data} />

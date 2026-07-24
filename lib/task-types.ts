@@ -59,6 +59,62 @@ export type Activity = {
   task: { id: string; task_id: string; title: string } | null
 }
 
+export type IntakeFieldType =
+  | "text"
+  | "email"
+  | "tel"
+  | "url"
+  | "textarea"
+  | "radio"
+  | "checkbox"
+  | "time_range"
+  | "file"
+  | "number"
+  | "date"
+
+export type IntakeField = {
+  id: string
+  section_number: number
+  section_title: string
+  field_order: number
+  field_key: string
+  label: string
+  placeholder: string
+  field_type: IntakeFieldType
+  options: string[]
+  required: boolean
+  is_active: boolean
+  config: Record<string, string | boolean>
+}
+
+export type IntakeSubmission = {
+  id: string
+  display_name: string
+  status: "draft" | "submitted"
+  created_at: string
+  updated_at: string
+  submitted_at: string | null
+  creator: Pick<Profile, "id" | "full_name"> | null
+}
+
+export type IntakeAnswer = {
+  id: string
+  submission_id: string
+  field_id: string
+  value: unknown
+}
+
+export type IntakeFile = {
+  id: string
+  submission_id: string
+  field_id: string
+  storage_path: string
+  file_name: string
+  mime_type: string | null
+  file_size: number
+  created_at: string
+}
+
 export type DashboardData = {
   profile: Profile
   profiles: Profile[]
@@ -66,4 +122,8 @@ export type DashboardData = {
   tasks: Task[]
   comments: Comment[]
   activities: Activity[]
+  intakeFields: IntakeField[]
+  intakeSubmissions: IntakeSubmission[]
+  intakeAnswers: IntakeAnswer[]
+  intakeFiles: IntakeFile[]
 }
