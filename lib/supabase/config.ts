@@ -1,7 +1,7 @@
-export const DEFAULT_PORTAL_SLUG = "internal-portal-su-7c4f19b8a2d64e51"
+export const PORTAL_SLUG = "scale-team-f465d132131c1f650acca68f"
 
 export function getPortalSlug() {
-  return process.env.TASK_PORTAL_SLUG || DEFAULT_PORTAL_SLUG
+  return PORTAL_SLUG
 }
 
 export function isValidPortal(portal: string) {
