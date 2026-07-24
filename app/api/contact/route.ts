@@ -1,8 +1,6 @@
 import { Resend } from "resend"
 import { NextRequest, NextResponse } from "next/server"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 // Basic XSS sanitization
 function sanitize(str: string): string {
   return str
@@ -15,6 +13,12 @@ function sanitize(str: string): string {
 
 export async function POST(request: NextRequest) {
   try {
+    const apiKey = process.env.RESEND_API_KEY
+    if (!apiKey) {
+      return NextResponse.json({ error: "Email service is not configured" }, { status: 503 })
+    }
+    const resend = new Resend(apiKey)
+
     const body = await request.json()
     const { name, email, phone, company, projectType, timeline, budget, message } = body
 

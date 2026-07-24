@@ -175,7 +175,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
-        <link rel="canonical" href="https://scaleunities.com" />
         <link rel="alternate" hrefLang="en" href="https://scaleunities.com" />
         <link rel="alternate" hrefLang="fr" href="https://scaleunities.com" />
         <link rel="alternate" hrefLang="x-default" href="https://scaleunities.com" />

@@ -126,6 +126,15 @@
   }
 }
 
+@layer components {
+  .form-input {
+    @apply h-11 w-full rounded-xl border border-[#ded7e2] bg-white px-3 text-sm text-[#302637] outline-none transition;
+  }
+  .form-input:focus {
+    @apply border-[#6B21A8] ring-4 ring-[#6B21A8]/10;
+  }
+}
+
 /* Robust marquee: track holds two identical sets; shifting -50% loops seamlessly */
 @keyframes marquee-left {
   from {
