@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { KeyRound } from "lucide-react"
 import { ResetPasswordPanel } from "@/components/tasks/reset-password-panel"
+import { PortalConfiguration } from "@/components/tasks/portal-configuration"
+import { isSupabaseConfigured } from "@/lib/supabase/config"
 
 export default async function ResetPasswordPage({
   params,
@@ -11,6 +13,7 @@ export default async function ResetPasswordPage({
 }) {
   const { portal } = await params
   const { mode } = await searchParams
+  if (!isSupabaseConfigured()) return <PortalConfiguration portal={portal} />
 
   return (
     <main className="min-h-screen bg-[#f7f5fa] px-5 py-10">
