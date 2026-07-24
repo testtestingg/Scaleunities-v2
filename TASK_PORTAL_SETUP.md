@@ -17,11 +17,13 @@ Add these variables in Vercel for Production, Preview, and Development:
 
 ## 2. Create the database
 
-Open the Supabase SQL editor and run:
+Open the Supabase SQL editor and run the migration files in order:
 
 `supabase/migrations/202607230001_scaleunities_tasks.sql`
 
-This creates the task-number sequence, profiles, businesses, tasks, comments,
+`supabase/migrations/202607240002_manager_business_permissions.sql`
+
+These create the task-number sequence, profiles, businesses, tasks, comments,
 activity history, triggers, permissions, and Row Level Security policies.
 
 ## 3. Create approved accounts

@@ -393,16 +393,16 @@ with check (
   and created_by = auth.uid()
 );
 
-create policy "Admins can update businesses"
+create policy "Managers can update businesses"
 on public.businesses for update
 to authenticated
-using (public.current_user_role() = 'admin')
-with check (public.current_user_role() = 'admin');
+using (public.current_user_role() in ('admin', 'project_manager'))
+with check (public.current_user_role() in ('admin', 'project_manager'));
 
-create policy "Admins can delete businesses"
+create policy "Managers can delete businesses"
 on public.businesses for delete
 to authenticated
-using (public.current_user_role() = 'admin');
+using (public.current_user_role() in ('admin', 'project_manager'));
 
 create policy "Users can read permitted tasks"
 on public.tasks for select

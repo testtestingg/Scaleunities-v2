@@ -264,6 +264,26 @@ export async function createBusiness(
   return { ok: true, message: "Business added." }
 }
 
+export async function deleteBusiness(
+  portal: string,
+  businessId: string,
+): Promise<ActionResult> {
+  if (!isValidPortal(portal)) return fail("This portal link is invalid.")
+  const { supabase, profile } = await getActor()
+  if (!profile || !["admin", "project_manager"].includes(profile.role)) {
+    return fail("Only administrators and project managers can remove businesses.")
+  }
+
+  const { error } = await supabase
+    .from("businesses")
+    .update({ is_active: false })
+    .eq("id", businessId)
+
+  if (error) return fail(error.message)
+  refreshPortal(portal)
+  return { ok: true, message: "Business removed from the active workspace." }
+}
+
 export async function updateProfileRole(
   portal: string,
   profileId: string,
