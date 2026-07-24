@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { KeyRound } from "lucide-react"
 import { ResetPasswordPanel } from "@/components/tasks/reset-password-panel"
 import { PortalConfiguration } from "@/components/tasks/portal-configuration"
 import { isSupabaseConfigured } from "@/lib/supabase/config"
@@ -19,8 +18,12 @@ export default async function ResetPasswordPage({
     <main className="min-h-screen bg-[#f7f5fa] px-5 py-10">
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-md items-center">
         <div className="w-full rounded-3xl border border-[#e7e1ed] bg-white p-7 shadow-[0_24px_70px_rgba(45,28,64,0.08)] sm:p-9">
-          <div className="mb-7 flex h-11 w-11 items-center justify-center rounded-xl bg-[#6B21A8] text-white">
-            <KeyRound className="h-5 w-5" />
+          <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-xl border border-[#e7e1ed] bg-white p-1 shadow-sm">
+            <img
+              src="/scaleunities-logo.png"
+              alt="ScaleUnities logo"
+              className="h-full w-full object-contain"
+            />
           </div>
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-[#6B21A8]">
             ScaleUnities Workspace

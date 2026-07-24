@@ -223,8 +223,12 @@ export function TaskWorkspace({
       >
         <div className="flex h-20 items-center justify-between border-b border-white/10 px-6">
           <Link href={`/task/${portal}/dashboard`} className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#8c3fc2] font-serif text-lg">
-              S
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white p-1 shadow-sm">
+              <img
+                src="/scaleunities-logo.png"
+                alt="ScaleUnities logo"
+                className="h-full w-full object-contain"
+              />
             </span>
             <span>
               <span className="block text-sm font-bold">ScaleUnities</span>

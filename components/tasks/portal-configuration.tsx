@@ -1,12 +1,16 @@
-import { Database, ShieldCheck } from "lucide-react"
+import { ShieldCheck } from "lucide-react"
 
 export function PortalConfiguration({ portal }: { portal: string }) {
   return (
     <main className="min-h-screen bg-[#f7f5fa] px-5 py-10">
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-xl items-center">
         <section className="w-full rounded-3xl border border-[#e7e1ed] bg-white p-7 shadow-[0_24px_70px_rgba(45,28,64,0.08)] sm:p-10">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f0e7f6] text-[#6B21A8]">
-            <Database className="h-6 w-6" />
+          <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-[#e7e1ed] bg-white p-1 shadow-sm">
+            <img
+              src="/scaleunities-logo.png"
+              alt="ScaleUnities logo"
+              className="h-full w-full object-contain"
+            />
           </div>
           <p className="mt-7 text-xs font-bold uppercase tracking-[0.18em] text-[#6B21A8]">
             ScaleUnities Workspace
