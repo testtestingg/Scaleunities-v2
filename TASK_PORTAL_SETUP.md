@@ -2,21 +2,18 @@
 
 The portal lives at:
 
-`https://scaleunities.com/task/<TASK_PORTAL_SLUG>`
+`https://scaleunities.com/task/scale-team-f465d132131c1f650acca68f`
 
 It is intentionally absent from the public header, footer, sitemap, and all public
 links. The route is also blocked in `robots.txt` and sends `noindex`, `nofollow`,
 and `noarchive` headers. 
 
-## 1. Environment variables
+## 1. Supabase environment variables
 
 Add these variables in Vercel for Production, Preview, and Development:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` or `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-- `TASK_PORTAL_SLUG`
-
-Use a long random value for `TASK_PORTAL_SLUG`. Do not include `/task/` in the value.
 
 ## 2. Create the database
 
