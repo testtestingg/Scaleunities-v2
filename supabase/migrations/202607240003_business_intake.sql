@@ -2,7 +2,7 @@
 
 create table public.intake_form_fields (
   id uuid primary key default gen_random_uuid(),
-  section_number integer not null check (section_number between 1 and 99),
+  section_number integer not null check (section_number between 1 and 99), 
   section_title text not null,
   field_order integer not null,
   field_key text not null unique,
