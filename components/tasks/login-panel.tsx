@@ -38,8 +38,12 @@ export function LoginPanel({
           <div className="absolute -left-24 top-32 h-72 w-72 rounded-full border border-white/10" />
           <div className="absolute -left-4 top-52 h-96 w-96 rounded-full border border-white/5" />
           <div className="relative flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#8b3bc4] font-serif text-xl">
-              S
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white p-1 shadow-sm">
+              <img
+                src="/scaleunities-logo.png"
+                alt="ScaleUnities logo"
+                className="h-full w-full object-contain"
+              />
             </div>
             <span className="text-lg font-semibold tracking-tight">ScaleUnities</span>
           </div>
@@ -66,8 +70,12 @@ export function LoginPanel({
         <section className="flex items-center justify-center px-5 py-10 sm:px-10">
           <div className="w-full max-w-md">
             <div className="mb-10 flex items-center gap-3 lg:hidden">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#6B21A8] font-serif text-xl text-white">
-                S
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#e7e1ed] bg-white p-1 shadow-sm">
+                <img
+                  src="/scaleunities-logo.png"
+                  alt="ScaleUnities logo"
+                  className="h-full w-full object-contain"
+                />
               </div>
               <span className="text-lg font-semibold text-[#281d30]">ScaleUnities</span>
             </div>
