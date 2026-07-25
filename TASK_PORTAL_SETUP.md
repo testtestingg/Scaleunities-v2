@@ -25,6 +25,8 @@ Open the Supabase SQL editor and run the migration files in order:
 
 `supabase/migrations/202607240003_business_intake.sql`
 
+`supabase/migrations/202607250001_remove_intake_questions.sql`
+
 These create the task-number sequence, profiles, businesses, tasks, comments,
 activity history, field-intake form, private media bucket, triggers, permissions,
 and Row Level Security policies.
