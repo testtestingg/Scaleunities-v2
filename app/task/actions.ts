@@ -364,6 +364,44 @@ export async function saveIntakeAnswer(
   return { ok: true, message: "Response saved." }
 }
 
+export async function saveIntakeAnswers(
+  portal: string,
+  submissionId: string,
+  answers: Array<{ fieldId: string; fieldKey: string; value: unknown }>,
+): Promise<ActionResult> {
+  const actor = await requireIntakeAdmin(portal)
+  if (!actor || !answers.length || answers.length > 100) {
+    return fail("Unable to save these field intake responses.")
+  }
+
+  const { error } = await actor.supabase.from("intake_answers").upsert(
+    answers.map((answer) => ({
+      submission_id: submissionId,
+      field_id: answer.fieldId,
+      value: answer.value,
+    })),
+    { onConflict: "submission_id,field_id" },
+  )
+  if (error) return fail(error.message)
+
+  const businessName = answers.find(
+    (answer) =>
+      answer.fieldKey === "business_name" &&
+      typeof answer.value === "string" &&
+      answer.value.trim(),
+  )
+  if (businessName && typeof businessName.value === "string") {
+    const { error: nameError } = await actor.supabase
+      .from("intake_submissions")
+      .update({ display_name: businessName.value.trim() })
+      .eq("id", submissionId)
+    if (nameError) return fail(nameError.message)
+  }
+
+  refreshPortal(portal)
+  return { ok: true, message: "Responses saved." }
+}
+
 export async function completeIntakeSubmission(
   portal: string,
   submissionId: string,
