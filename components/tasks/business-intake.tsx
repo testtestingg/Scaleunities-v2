@@ -24,7 +24,7 @@ import {
   createIntakeUploadTarget,
   recordIntakeFile,
   removeIntakeField,
-  saveIntakeAnswer,
+  saveIntakeAnswers,
   startIntakeSubmission,
   updateIntakeField,
   type ActionResult,
@@ -87,13 +87,18 @@ export function BusinessIntakeForm({
 }) {
   const activeFields = fields.filter((field) => field.is_active)
   const [submissionId, setSubmissionId] = useState<string | null>(null)
-  const [index, setIndex] = useState(-1)
+  const [page, setPage] = useState(-1)
   const [answers, setAnswers] = useState<Record<string, unknown>>({})
   const [busy, setBusy] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState("")
   const [complete, setComplete] = useState(false)
-  const current = activeFields[index]
+  const currentFields =
+    page < 0
+      ? []
+      : activeFields.filter((field) =>
+          page === 0 ? field.section_number <= 4 : field.section_number >= 5,
+        )
 
   async function start() {
     setBusy(true)
@@ -105,31 +110,35 @@ export function BusinessIntakeForm({
       return
     }
     setSubmissionId(result.submissionId)
-    setIndex(0)
+    setPage(0)
   }
 
   async function next() {
-    if (!current || !submissionId) return
-    const value = answers[current.id] ?? initialValue(current)
-    if (current.required && !hasValue(value)) {
-      setError("Cette réponse est obligatoire.")
-      return
+    if (!currentFields.length || !submissionId) return
+    for (const field of currentFields) {
+      const value = answers[field.id] ?? initialValue(field)
+      if (field.required && !hasValue(value)) {
+        setError(`« ${field.label} » est obligatoire.`)
+        return
+      }
     }
     setBusy(true)
     setError("")
-    const saved = await saveIntakeAnswer(
+    const saved = await saveIntakeAnswers(
       portal,
       submissionId,
-      current.id,
-      current.field_key,
-      value,
+      currentFields.map((field) => ({
+        fieldId: field.id,
+        fieldKey: field.field_key,
+        value: answers[field.id] ?? initialValue(field),
+      })),
     )
     if (!saved.ok) {
       setBusy(false)
       setError(saved.message)
       return
     }
-    if (index === activeFields.length - 1) {
+    if (page === 1) {
       const submitted = await completeIntakeSubmission(portal, submissionId)
       setBusy(false)
       if (!submitted.ok) {
@@ -140,17 +149,17 @@ export function BusinessIntakeForm({
       return
     }
     setBusy(false)
-    setIndex((valueIndex) => valueIndex + 1)
+    setPage(1)
   }
 
-  async function uploadFiles(files: FileList | null) {
-    if (!files || !current || !submissionId) return
+  async function uploadFiles(field: IntakeField, files: FileList | null) {
+    if (!files || !submissionId) return
     setUploading(true)
     setError("")
-    const existing = Array.isArray(answers[current.id])
-      ? (answers[current.id] as FileAnswer[]).slice()
+    const existing = Array.isArray(answers[field.id])
+      ? (answers[field.id] as FileAnswer[]).slice()
       : []
-    const selected = current.config.multiple ? Array.from(files) : [files[0]]
+    const selected = field.config.multiple ? Array.from(files) : [files[0]]
     for (const file of selected) {
       if (!file) continue
       if (file.size > 10 * 1024 * 1024) {
@@ -160,7 +169,7 @@ export function BusinessIntakeForm({
       const target = await createIntakeUploadTarget(
         portal,
         submissionId,
-        current.id,
+        field.id,
         file.name,
         file.size,
       )
@@ -191,7 +200,7 @@ export function BusinessIntakeForm({
       const recorded = await recordIntakeFile(
         portal,
         submissionId,
-        current.id,
+        field.id,
         target.path,
         file.name,
         file.type,
@@ -208,7 +217,7 @@ export function BusinessIntakeForm({
         type: file.type,
       })
     }
-    setAnswers((values) => ({ ...values, [current.id]: existing }))
+    setAnswers((values) => ({ ...values, [field.id]: existing }))
     setUploading(false)
   }
 
@@ -227,7 +236,7 @@ export function BusinessIntakeForm({
             onClick={() => {
               setSubmissionId(null)
               setAnswers({})
-              setIndex(-1)
+              setPage(-1)
               setComplete(false)
             }}
             className="mt-8 rounded-xl bg-[#6B21A8] px-6 py-3 text-sm font-bold text-white"
@@ -239,7 +248,7 @@ export function BusinessIntakeForm({
     )
   }
 
-  if (index < 0) {
+  if (page < 0) {
     return (
       <section className="relative mx-auto overflow-hidden rounded-3xl bg-[#24162d] px-7 py-12 text-white sm:px-12 sm:py-16">
         <div className="absolute -right-20 -top-28 h-80 w-80 rounded-full border border-white/10" />
@@ -272,54 +281,99 @@ export function BusinessIntakeForm({
     )
   }
 
-  const value = answers[current.id] ?? initialValue(current)
-  const progress = ((index + 1) / activeFields.length) * 100
+  const pageSections = currentFields.reduce<
+    Array<{ number: number; title: string; fields: IntakeField[] }>
+  >((sections, field) => {
+    const existing = sections.find((section) => section.number === field.section_number)
+    if (existing) {
+      existing.fields.push(field)
+    } else {
+      sections.push({
+        number: field.section_number,
+        title: field.section_title,
+        fields: [field],
+      })
+    }
+    return sections
+  }, [])
+  const progress = (page + 1) * 50
   return (
-    <section className="mx-auto max-w-4xl">
+    <section className="mx-auto max-w-6xl">
       <div className="mb-6">
         <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.14em] text-[#8e8493]">
-          <span>Section {current.section_number} · {current.section_title}</span>
-          <span>{index + 1} / {activeFields.length}</span>
+          <span>Partie {page + 1} sur 2</span>
+          <span>{currentFields.length} questions</span>
         </div>
         <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#e6deea]">
           <div className="h-full rounded-full bg-[#6B21A8] transition-all duration-300" style={{ width: `${progress}%` }} />
         </div>
       </div>
 
-      <div className="rounded-3xl border border-[#e4dce8] bg-white px-6 py-8 shadow-[0_24px_80px_rgba(45,28,64,0.06)] sm:px-12 sm:py-12">
-        <div className="flex items-start gap-3">
-          <span className="mt-2 text-sm font-bold text-[#6B21A8]">{index + 1} →</span>
-          <div className="min-w-0 flex-1">
-            <h2 className="font-serif text-4xl leading-tight text-[#281e2f] sm:text-5xl">
-              {current.label}
-              {current.required && <span className="ml-2 text-[#8b3fc0]">*</span>}
-            </h2>
-            {current.placeholder && current.field_type !== "text" && (
-              <p className="mt-3 text-sm text-[#8a808f]">{current.placeholder}</p>
-            )}
-            <div className="mt-8">
-              <IntakeInput
-                field={current}
-                value={value}
-                setValue={(nextValue) =>
-                  setAnswers((values) => ({ ...values, [current.id]: nextValue }))
-                }
-                uploading={uploading}
-                onFiles={uploadFiles}
-              />
+      <div className="space-y-5">
+        {pageSections.map((section) => (
+          <div
+            key={section.number}
+            className="overflow-hidden rounded-3xl border border-[#e4dce8] bg-white shadow-[0_24px_80px_rgba(45,28,64,0.06)]"
+          >
+            <header className="border-b border-[#eee8f1] bg-[#faf8fb] px-6 py-5 sm:px-8">
+              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#6B21A8]">
+                Section {section.number}
+              </p>
+              <h2 className="mt-1 font-serif text-3xl text-[#281e2f]">{section.title}</h2>
+            </header>
+            <div className="grid gap-x-8 gap-y-10 px-6 py-7 sm:px-8 sm:py-9 lg:grid-cols-2">
+              {section.fields.map((field) => {
+                const value = answers[field.id] ?? initialValue(field)
+                const questionNumber =
+                  activeFields.findIndex((activeField) => activeField.id === field.id) + 1
+                return (
+                  <div key={field.id} className="min-w-0">
+                    <div className="flex items-start gap-3">
+                      <span className="mt-1 text-xs font-bold text-[#6B21A8]">
+                        {questionNumber} →
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-serif text-2xl leading-tight text-[#281e2f] sm:text-3xl">
+                          {field.label}
+                          {field.required && <span className="ml-2 text-[#8b3fc0]">*</span>}
+                        </h3>
+                        {field.placeholder && field.field_type !== "text" && (
+                          <p className="mt-2 text-xs text-[#8a808f]">{field.placeholder}</p>
+                        )}
+                        <div className="mt-5">
+                          <IntakeInput
+                            field={field}
+                            value={value}
+                            setValue={(nextValue) =>
+                              setAnswers((values) => ({
+                                ...values,
+                                [field.id]: nextValue,
+                              }))
+                            }
+                            uploading={uploading}
+                            onFiles={(files) => uploadFiles(field, files)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
-        </div>
+        ))}
+      </div>
 
-        {error && <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
-        <div className="mt-9 flex items-center justify-between border-t border-[#eee8f1] pt-5">
+      {error && <p className="mt-5 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
+      <div className="mt-5 rounded-2xl border border-[#e4dce8] bg-white px-4 py-3 shadow-sm">
+        <div className="flex items-center justify-between">
           <button
             type="button"
             onClick={() => {
               setError("")
-              setIndex((valueIndex) => Math.max(0, valueIndex - 1))
+              setPage(0)
             }}
-            disabled={index === 0 || busy}
+            disabled={page === 0 || busy}
             className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold text-[#6e6374] disabled:opacity-30"
           >
             <ArrowLeft className="h-4 w-4" /> Retour
@@ -331,7 +385,7 @@ export function BusinessIntakeForm({
             className="inline-flex items-center gap-2 rounded-xl bg-[#6B21A8] px-6 py-3 text-sm font-bold text-white disabled:opacity-50"
           >
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
-            {index === activeFields.length - 1 ? "Envoyer" : "OK"}
+            {page === 1 ? "Envoyer" : "Suivant"}
           </button>
         </div>
       </div>
@@ -417,7 +471,6 @@ function IntakeInput({
         onChange={(event) => setValue(event.target.value)}
         placeholder={field.placeholder}
         className={`${inputClass} min-h-32 resize-y`}
-        autoFocus
       />
     )
   }
@@ -484,7 +537,6 @@ function IntakeInput({
       onChange={(event) => setValue(event.target.value)}
       placeholder={field.placeholder}
       className={inputClass}
-      autoFocus
       step={field.field_type === "number" ? "0.01" : undefined}
     />
   )
