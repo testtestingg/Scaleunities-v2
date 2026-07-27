@@ -342,6 +342,16 @@ export function TaskWorkspace({
               </p>
             </div>
           </div>
+          {data.profile.role === "admin" && section === "intake" && (
+            <Link
+              href={`/task/${portal}/dashboard/intake-submissions`}
+              className="flex h-10 items-center gap-2 rounded-xl bg-[#24162d] px-4 text-sm font-bold text-white transition hover:bg-[#3a2446]"
+            >
+              <ClipboardList className="h-4 w-4" />
+              <span className="hidden sm:inline">Intake responses</span>
+              <span className="sm:hidden">Responses</span>
+            </Link>
+          )}
           {data.profile.role === "admin" && !section.startsWith("intake") && (
             <button
               onClick={() => setEditorTask("new")}
