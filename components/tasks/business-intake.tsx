@@ -760,6 +760,7 @@ export function IntakeSubmissions({
   files: IntakeFile[]
 }) {
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [statusFilter, setStatusFilter] = useState<"submitted" | "draft">("submitted")
   const selected = submissions.find((submission) => submission.id === selectedId)
   const sortedFields = [...fields].sort(
     (a, b) => a.section_number - b.section_number || a.field_order - b.field_order,
@@ -772,13 +773,26 @@ export function IntakeSubmissions({
     })
     return map
   }, [answers])
+  const visibleSubmissions = submissions.filter(
+    (submission) => submission.status === statusFilter,
+  )
+  const businessNameField = fields.find((field) => field.field_key === "business_name")
+
+  function submissionName(submission: IntakeSubmission) {
+    const savedName = businessNameField
+      ? answerMap.get(submission.id)?.get(businessNameField.id)
+      : null
+    return typeof savedName === "string" && savedName.trim()
+      ? savedName.trim()
+      : submission.display_name
+  }
 
   function exportCsv() {
     const headers = ["Entreprise", "Statut", "Créé le", "Envoyé le", ...sortedFields.map((field) => field.label)]
-    const rows = submissions.map((submission) => {
+    const rows = visibleSubmissions.map((submission) => {
       const values = answerMap.get(submission.id)
       return [
-        submission.display_name,
+        submissionName(submission),
         submission.status,
         submission.created_at,
         submission.submitted_at || "",
@@ -802,11 +816,37 @@ export function IntakeSubmissions({
       <div className="mb-5 flex flex-col justify-between gap-4 rounded-2xl border border-[#e5dde9] bg-white p-5 sm:flex-row sm:items-center">
         <div>
           <h2 className="font-serif text-2xl">Réponses collectées</h2>
-          <p className="mt-1 text-xs text-[#8a808f]">{submissions.length} formulaires · import direct dans Google Sheets</p>
+          <p className="mt-1 text-xs text-[#8a808f]">
+            {submissions.filter((submission) => submission.status === "submitted").length} formulaires envoyés · import direct dans Google Sheets
+          </p>
         </div>
-        <button onClick={exportCsv} disabled={!submissions.length} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#167C4A] px-4 py-2.5 text-sm font-bold text-white disabled:opacity-40">
+        <button onClick={exportCsv} disabled={!visibleSubmissions.length} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#167C4A] px-4 py-2.5 text-sm font-bold text-white disabled:opacity-40">
           <FileSpreadsheet className="h-4 w-4" /> Télécharger CSV
         </button>
+      </div>
+      <div className="mb-4 inline-flex rounded-xl border border-[#e5dde9] bg-white p-1">
+        {([
+          ["submitted", "Formulaires envoyés"],
+          ["draft", "Brouillons"],
+        ] as const).map(([value, label]) => {
+          const count = submissions.filter((submission) => submission.status === value).length
+          return (
+            <button
+              key={value}
+              onClick={() => {
+                setStatusFilter(value)
+                setSelectedId(null)
+              }}
+              className={`rounded-lg px-4 py-2 text-xs font-bold transition ${
+                statusFilter === value
+                  ? "bg-[#6B21A8] text-white"
+                  : "text-[#776c7d] hover:bg-[#f5f0f7]"
+              }`}
+            >
+              {label} ({count})
+            </button>
+          )
+        })}
       </div>
       <section className="overflow-hidden rounded-2xl border border-[#e5dde9] bg-white">
         <div className="hidden overflow-x-auto sm:block">
@@ -815,9 +855,9 @@ export function IntakeSubmissions({
               <tr><th className="px-5 py-4">Entreprise</th><th className="px-4 py-4">Statut</th><th className="px-4 py-4">Date</th><th className="px-4 py-4">Fichiers</th><th className="px-5 py-4 text-right">Voir</th></tr>
             </thead>
             <tbody className="divide-y divide-[#f0ebf2]">
-              {submissions.map((submission) => (
+              {visibleSubmissions.map((submission) => (
                 <tr key={submission.id}>
-                  <td className="px-5 py-4 text-sm font-bold">{submission.display_name}</td>
+                  <td className="px-5 py-4 text-sm font-bold">{submissionName(submission)}</td>
                   <td className="px-4 py-4"><span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${submission.status === "submitted" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>{submission.status === "submitted" ? "Envoyé" : "Brouillon"}</span></td>
                   <td className="px-4 py-4 text-xs text-[#7f7584]">{new Date(submission.created_at).toLocaleDateString("fr-FR")}</td>
                   <td className="px-4 py-4 text-xs text-[#7f7584]">{files.filter((file) => file.submission_id === submission.id).length}</td>
@@ -828,21 +868,27 @@ export function IntakeSubmissions({
           </table>
         </div>
         <div className="divide-y divide-[#f0ebf2] sm:hidden">
-          {submissions.map((submission) => (
+          {visibleSubmissions.map((submission) => (
             <button key={submission.id} onClick={() => setSelectedId(submission.id)} className="flex w-full items-center justify-between p-4 text-left">
-              <span><span className="block text-sm font-bold">{submission.display_name}</span><span className="mt-1 block text-xs text-[#8d8392]">{new Date(submission.created_at).toLocaleDateString("fr-FR")}</span></span>
+              <span><span className="block text-sm font-bold">{submissionName(submission)}</span><span className="mt-1 block text-xs text-[#8d8392]">{new Date(submission.created_at).toLocaleDateString("fr-FR")}</span></span>
               <ChevronRight className="h-4 w-4 text-[#6B21A8]" />
             </button>
           ))}
         </div>
-        {!submissions.length && <div className="px-5 py-16 text-center text-sm text-[#908695]">Aucun formulaire pour le moment.</div>}
+        {!visibleSubmissions.length && (
+          <div className="px-5 py-16 text-center text-sm text-[#908695]">
+            {statusFilter === "submitted"
+              ? "Aucun formulaire envoyé pour le moment."
+              : "Aucun brouillon pour le moment."}
+          </div>
+        )}
       </section>
       {selected && (
         <div className="fixed inset-0 z-[90] flex justify-end bg-[#170e1d]/50">
           <button className="absolute inset-0" onClick={() => setSelectedId(null)} aria-label="Fermer" />
           <aside className="relative h-full w-full max-w-xl overflow-y-auto bg-[#faf8fb] p-6 shadow-2xl sm:p-8">
             <div className="flex items-start justify-between">
-              <div><p className="text-xs font-bold uppercase tracking-[0.15em] text-[#6B21A8]">Fiche entreprise</p><h2 className="mt-2 font-serif text-4xl">{selected.display_name}</h2></div>
+              <div><p className="text-xs font-bold uppercase tracking-[0.15em] text-[#6B21A8]">Fiche entreprise</p><h2 className="mt-2 font-serif text-4xl">{submissionName(selected)}</h2></div>
               <button onClick={() => setSelectedId(null)} className="rounded-lg p-2 hover:bg-white"><X className="h-5 w-5" /></button>
             </div>
             <div className="mt-7 space-y-3">
@@ -856,6 +902,15 @@ export function IntakeSubmissions({
                   </div>
                 )
               })}
+              {!sortedFields.some((field) =>
+                hasValue(answerMap.get(selected.id)?.get(field.id)),
+              ) && (
+                <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800">
+                  {selected.status === "draft"
+                    ? "Ce brouillon a été créé, mais aucune réponse n’a encore été enregistrée."
+                    : "Aucune réponse n’est visible pour ce formulaire. Appliquez la migration de visibilité des réponses, puis actualisez la page."}
+                </div>
+              )}
             </div>
           </aside>
         </div>
