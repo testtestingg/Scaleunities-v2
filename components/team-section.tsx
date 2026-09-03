@@ -6,7 +6,7 @@ import { useLanguage } from "@/components/language-provider"
 const teamMeta = [
   { name: "Amir Dridi", image: "https://i.ibb.co/VY2qN385/Whats-App-Image-2026-03-23-at-22-13-42.jpg" },
   { name: "Ranim Mourad", image: "https://i.ibb.co/RTmfhRtG/Whats-App-Image-2026-02-04-at-15-31-08.jpg" },
-  { name: "Ali Ben Said", image: "https://i.ibb.co/HmmQ9qc/Whats-App-Image-2025-10-17-at-22-07-14.jpg" },
+  { name: "Ali Ben Said", image: "https://i.ibb.co/6cg19Zqy/Whats-App-Image-2026-09-03-at-11-48-41.jpg" },
   { name: "Houssem Ben Cheikh", image: "https://i.ibb.co/bgBXhkXN/1763386283657.png" },
 ]
 
